@@ -5,15 +5,19 @@ from flask_wtf.file import FileRequired, FileField, FileAllowed
 
 ALLOWED_FILE = {'PNG', 'JPG', 'JPEG', 'png', 'jpg', 'jpeg'}
 
-# Create new destination
-class DestinationForm(FlaskForm):
+# Create new event
+class EventForm(FlaskForm):
   name = StringField('Country', validators=[InputRequired()])
   description = TextAreaField('Description', 
             validators=[InputRequired()])
-  image = FileField('Destination Image', validators=[
+  image = FileField('Event Image', validators=[
     FileRequired(message = 'Image cannot be empty'),
     FileAllowed(ALLOWED_FILE, message='Only supports png, jpg, JPG, PNG')])
-  currency = StringField('Currency', validators=[InputRequired()])
+  location = StringField('Location', validators=[InputRequired()])
+  activity = StringField('Activity', validators=[InputRequired()])
+  host_name = StringField('HostName', validators=[InputRequired()])
+  host_experience = StringField('HostExperience', validators=[InputRequired()])
+  host_contact = StringField('HostContact', validators=[InputRequired()])
   submit = SubmitField("Create")
     
 # User login
