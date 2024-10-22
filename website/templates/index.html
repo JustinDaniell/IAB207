@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+
+    <title>Hobby Crunch</title>
+    <link rel="stylesheet" href="static/style/styles.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- navbar-brand font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Joti+One&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-orange">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html">Hobby Crunch</a>
+                <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <a href="manageTickets.html" class="btn nav-btn ms-2">My Tickets</a>
+                        <a href="myEvents.html" class="btn nav-btn ms-2">My Events</a>
+                        <a href="#" class="btn btn-warning ms-2">Register</a>
+                        <a href="#" class="btn btn-success ms-2">Log In</a>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main style="margin-top: 70px;">
+        <!--Carousel-->
+        <div id="carouselIndicators" class="carousel slide mx-auto"
+            style="max-width: 1000px; max-height: 500px; background-color: rgb(170, 170, 170);">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="eventDetails.html">
+                        <img src="static/img/paint.png" style="border: none;" class="d-block h-100 mx-auto" alt="Learn to Paint Event">
+                        <div class="carousel-caption d-none d-md-block"
+                            style="background-color: rgba(110, 110, 110, 0.7);">
+                            <h5>Learn to Paint</h5>
+                            <p>For Beginners, Intermediates and Advanced.</p>
+                            <p>Tickets for <span style="font-weight: 700; color: #3de12b;">$75</span> each.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a href="eventDetails.html">
+                        <img src="static/img/painting.jpg" style="border: none;" class="d-block h-100 mx-auto"
+                            alt="Beginners Painting Event">
+                        <div class="carousel-caption d-none d-md-block"
+                            style="background-color: rgba(110, 110, 110, 0.7);">
+                            <h5>Beginner Painting Lessons</h5>
+                            <p>For Beginners and Intermediates.</p>
+                            <p>Tickets for <span style="font-weight: 700; color: #3de12b;">$100</span> each.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a href="eventDetails.html">
+                        <img src="static/img/woodworking.jpg" style="border: none;" class="d-block h-100 mx-auto"
+                            alt="Woodworking Event">
+                        <div class="carousel-caption d-none d-md-block"
+                            style="background-color: rgba(110, 110, 110, 0.7);">
+                            <h5>Hugh's Beginners Woodworking</h5>
+                            <p>For Beginners.</p>
+                            <p>Tickets for <span style="font-weight: 700; color: #3de12b;">$250</span> each.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!--Container splitting filters and events-->
+        <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="row">
+
+                <!--Filters-->
+                <div class="col-3 p-3 grid-item">
+                    <h3>Filter by:</h3>
+                    <hr>
+                    <div style="margin-left: 10px;">
+                        <h4>Allow Inactive Events</h4>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Inactive" checked>
+                            <label class="form-check-label" for="Inactive">Inactive</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Sold Out" checked>
+                            <label class="form-check-label" for="Sold Out">Sold Out</label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div style="margin-left: 10px;">
+                        <h4>Proficiency</h4>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Beginner" checked>
+                            <label class="form-check-label" for="Beginner">Beginner</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Intermediate">
+                            <label class="form-check-label" for="Intermediate">Intermediate</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Advanced">
+                            <label class="form-check-label" for="Advanced">Advanced</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Expert">
+                            <label class="form-check-label" for="Expert">Expert</label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div style="margin-left: 10px;">
+                        <h4>Activity</h4>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Arts & Craft" checked>
+                            <label class="form-check-label" for="Arts & Craft">Arts & Craft</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Sports & Fitness">
+                            <label class="form-check-label" for="Sports & Fitness">Sports & Fitness</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Music">
+                            <label class="form-check-label" for="Music">Music</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Board Games">
+                            <label class="form-check-label" for="Board Games">Board Games</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Electronic Games">
+                            <label class="form-check-label" for="Electronic Games">Electronic Games</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Education">
+                            <label class="form-check-label" for="Education">Education</label>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+                <div class="col-8">
+                    <div class="p-1" style="margin-bottom: 5px;">
+                        <form class="d-flex col-11">
+                            <span class="input-group">
+                                <input class="form-control" type="text" placeholder="Search">
+                                <button class="btn btn-primary" type="button">Search</button>
+                            </span>
+                        </form>
+                        <ul class="d-flex flex-wrap" style="list-style-type: none; margin-top: 10px;">
+                            <h7 class="p-2"><b>Active Filters:</b></h7>
+                            <li class="nav-item ">
+                                <button type="button" class="btn filter-btn ms-2">Proficiency: <span
+                                        style="font-weight: 400;">Beginner </span><b class="batsu-cross">×</b></button>
+                            </li>
+                            <li class="nav-item">
+                                <button type="button" class="btn filter-btn ms-2">Activity: <span
+                                        style="font-weight: 400;">Arts & Craft </span><b
+                                        class="batsu-cross">×</b></button>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Events View -->
+                    <div>
+                        <div class="card p-2" style="margin-bottom: 5px;">
+                            <a href="eventDetails.html">
+                                <div class="row">
+                                    <img src="static/img/painting.jpg" class="d-block col-xl-4 col-lg-5 img-home"
+                                        alt="Beginners Painting Event">
+                                    <div class="col-xl-7 col-lg-6" style="margin-left: 10px;">
+                                        <h2>Beginner Painting Lessons</h2>
+                                        <div style="margin-left: 15px;">
+                                            <h4 style="margin-bottom: 0px;">Arts & Craft</h4>
+                                            <p style="font-weight: 600;">Beginners and Intermediates</p>
+                                            <p><span style="font-weight: 600;">At: </span>123 Art Rd</p>
+                                            <p><span style="font-weight: 600;">Start Time: </span>9:00am, 16
+                                                September</p>
+                                            <p><span style="font-weight: 600;">End Time: </span>12:00pm, 16
+                                                September</p>
+                                            <p style="font-weight: 600;">Price: <span class="price">$100</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="card p-2" style="margin-bottom: 5px;">
+                            <a href="eventDetails.html">
+                                <div class="row">
+                                    <img src="static/img/digital art.png" class="d-block col-xl-4 col-lg-5 img-home"
+                                        alt="Digital Art Event">
+                                    <div class="col-xl-7 col-lg-6" style="margin-left: 10px;">
+                                        <h2>Beginners Tablet Drawing Course</h2>
+                                        <div style="margin-left: 15px;">
+                                            <h4 style="margin-bottom: 0px;">Arts & Craft</h4>
+                                            <p style="font-weight: 600;">Beginners</p>
+                                            <p><span style="font-weight: 600;">At: </span>9 Home St</p>
+                                            <p><span style="font-weight: 600;">Start Time: </span>11:00am, 19
+                                                September</p>
+                                            <p><span style="font-weight: 600;">End Time: </span>1:00pm, 19
+                                                September
+                                            </p>
+                                            <p class="cancelled">Inactive</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="card p-2" style="margin-bottom: 5px;">
+                            <a href="eventDetails.html">
+                                <div class="row">
+                                    <img src="static/img/origami.jpg" class="d-block col-xl-4 col-lg-5 img-home"
+                                        alt="Origami Event">
+                                    <div class="col-xl-7 col-lg-6" style="margin-left: 10px;">
+                                        <h2>Learn to Fold an Origami Butterfly</h2>
+                                        <div style="margin-left: 15px;">
+                                            <h4 style="margin-bottom: 0px;">Arts & Craft</h4>
+                                            <p style="font-weight: 600;">Beginners and Intermediates</p>
+                                            <p><span style="font-weight: 600;">At: </span>Downstairs Art Gallery
+                                            </p>
+                                            <p><span style="font-weight: 600;">Start Time: </span>10:00am, 16
+                                                October</p>
+                                            <p><span style="font-weight: 600;">End Time: </span>12:00pm, 16
+                                                October
+                                            </p>
+                                            <p class="cancelled">Sold Out</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="card p-2" style="margin-bottom: 5px;">
+                            <a href="eventDetails.html">
+                                <div class="row">
+                                    <img src="static/img/woodworking.jpg" class="d-block col-xl-4 col-lg-5 img-home"
+                                        alt="Woodworking Event">
+                                    <div class="col-xl-7 col-lg-6" style="margin-left: 10px;">
+                                        <h2>Hugh's Beginners Woodworking</h2>
+                                        <div style="margin-left: 15px;">
+                                            <h4 style="margin-bottom: 0px;">Arts & Craft</h4>
+                                            <p style="font-weight: 600;">Beginners</p>
+                                            <p><span style="font-weight: 600;">At: </span>31 Wood St</p>
+                                            <p><span style="font-weight: 600;">Start Time: </span>1:00pm, 17
+                                                September</p>
+                                            <p><span style="font-weight: 600;">End Time: </span>5:00pm, 17
+                                                September
+                                            </p>
+                                            <p style="font-weight: 600;">Price: <span class="price">$250</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+
+                        <div class="card p-2" style="margin-bottom: 5px;">
+                            <a href="eventDetails.html">
+                                <div class="row">
+                                    <img src="static/img/paint.png" class="d-block col-xl-4 col-lg-5 img-home"
+                                        alt="Learn to Paint Event">
+                                    <div class="col-xl-7 col-lg-6" style="margin-left: 10px;">
+                                        <h2>Learn to Paint</h2>
+                                        <div style="margin-left: 15px;">
+                                            <h4 style="margin-bottom: 0px;">Arts & Craft</h4>
+                                            <p style="font-weight: 600;">Beginners, Intermediates and Advanced</p>
+                                            <p><span style="font-weight: 600;">At: </span>Downstairs ArtGallery</p>
+                                            <p><span style="font-weight: 600;">Start Time: </span>10:00am, 14
+                                                September</p>
+                                            <p><span style="font-weight: 600;">End Time: </span>3:00pm, 14 September
+                                            </p>
+                                            <p class="price">$75</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div>
+            <ul class="d-flex flex-wrap mx-auto justify-content-center p-1"
+                style="list-style-type: none; margin-top: 10px;">
+                <li class="px-2" style="border-right: 1px solid rgb(0, 0, 0)">
+                    <a href="#">Contact</a>
+                </li>
+                <li class="px-2" style="border-right: 1px solid rgb(0, 0, 0)">
+                    <a href="#">About</a>
+                </li>
+                <li class="px-2" style="border-right: 1px solid rgb(0, 0, 0)">
+                    <a href="#">Privacy Policy</a>
+                </li>
+                <li class="px-2" style="border-right: 1px solid rgb(0, 0, 0)">
+                    <a href="#">Conditions of Use</a>
+                </li>
+                <li class="px-2" style="border-right: 1px solid rgb(0, 0, 0)">
+                    <a href="#">Developers</a>
+                </li>
+            </ul>
+        </div>
+        © 2024 Hobby Crunch
+    </footer>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
