@@ -21,15 +21,13 @@ def create():
   if form.validate_on_submit():
     # call the function that checks and returns image
     db_file_path = check_upload_file(form)
-    event = Event(name=form.name.data, description=form.description.data, image=db_file_path, 
-    location=form.location.data, activity=form.activity.data, host_name=form.host_name.data,
-    host_experience=form.host_experience.data, host_contact=form.host_contact.data,
-    comments=form.comments.data, tickets=form.tickets.data)
+    event = Event(name=form.name.data, description=form.description.data, 
+    image=db_file_path, currency=form.currency.data)
     # add the object to the db session
     db.session.add(event)
     # commit to the database
     db.session.commit()
-    print('Successfully created new travel event', 'success')
+    print('Successfully created new event', 'success')
     # Always end with redirect when form is valid
     return redirect(url_for('event.create'))
   return render_template('events/create.html', form=form)

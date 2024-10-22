@@ -37,12 +37,12 @@ def create_app():
        return db.session.scalar(db.select(User).where(User.id==user_id))
 
     from . import views
-    app.register_blueprint(views.main_bp)
+    app.register_blueprint(views.mainbp)
 
     from . import auth
-    app.register_blueprint(auth.auth_bp)
+    app.register_blueprint(auth.authbp)
     
     from . import events
-    app.register_blueprint(events.event_bp)
+    app.register_blueprint(events.eventbp)
 
     return app
