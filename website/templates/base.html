@@ -33,24 +33,17 @@
                   aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon"></span>
               </button>
-              
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                   <ul class="navbar-nav ms-auto">
                       <a href="manageTickets.html" class="btn nav-btn ms-2">My Tickets</a>
                       <a href="myEvents.html" class="btn nav-btn ms-2">My Events</a>
-                      <!-- Register/Login/Logout and welcome -->
-                  {% if current_user.is_authenticated %}
-                  <a class="nav-item nav-link disabled text-muted" href="#">Welcome {{current_user.name}}</a>
-                  <a class="nav-item nav-link" href="{{ url_for('auth.logout') }}">Log Out</a>
-               {% else %}
-                  <a class="nav-item nav-link btn btn-warning ms-2" href="{{ url_for('auth.register') }}">Register</a>
-                  <a class="nav-item nav-link btn btn-success ms-2" href="{{ url_for('auth.login') }}">Log In</a>
-               {% endif %}
+                      <a href="#" class="btn btn-warning ms-2">Register</a>
+                      <a href="#" class="btn btn-success ms-2">Log In</a>
                   </ul>
               </div>
           </div>
       </nav>
-      
+   </header>
 
       <!-- flashes any messages to the user -->
       {% with messages = get_flashed_messages() %}

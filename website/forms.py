@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, IntegerField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField
 from wtforms.validators import InputRequired, Email, EqualTo
 from flask_wtf.file import FileRequired, FileField, FileAllowed
 
@@ -25,17 +25,13 @@ class LoginForm(FlaskForm):
 # User register
 class RegisterForm(FlaskForm):
     user_name = StringField("User Name", validators=[InputRequired()])
-    first_name = StringField("First Name", validators=[InputRequired()])
-    surname = StringField("Surname", validators=[InputRequired()])
     email_id = StringField("Email Address", validators=[Email("Please enter a valid email")])
-# linking two fields - password should be equal to data entered in confirm
+    
+    # linking two fields - password should be equal to data entered in confirm
     password = PasswordField("Password", validators=[InputRequired(),
                   EqualTo('confirm', message="Passwords should match")])
     confirm = PasswordField("Confirm Password")
-# other details
-    contact_number = IntegerField("Contact Number", validators=[InputRequired()])
-    street_address = TextAreaField("Street Address", validators=[InputRequired()])
-# submit button
+    # submit button
     submit = SubmitField("Register")
 
 # User comment
