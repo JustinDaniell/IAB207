@@ -1,3 +1,4 @@
+from flask_login import UserMixin
 from . import db
 from datetime import datetime
 
@@ -16,7 +17,7 @@ class User(db.Model):
     def __repr__(self):
         return f"Name: {self.name}"
 
-class Event(db.Model):
+class Event(db.Model,UserMixin):
     __tablename__ = 'events'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80))
