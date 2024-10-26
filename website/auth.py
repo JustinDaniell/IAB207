@@ -14,10 +14,14 @@ def register():
     register = RegisterForm()
     #the validation of form is fine, HTTP request is POST
     if (register.validate_on_submit()==True):
-            #get username, password and email from the form
+            #get details from the form
             uname = register.user_name.data
+            fname = register.first_name.data
+            lname = register.surname.data
             pwd = register.password.data
             email = register.email_id.data
+            number = register.contact_number.data
+            address = register.street_address.data
             #check if a user exists
             user = db.session.scalar(db.select(User).where(User.name==uname))
             if user:#this returns true when user is not None
@@ -26,7 +30,8 @@ def register():
             # don't store the password in plaintext!
             pwd_hash = generate_password_hash(pwd)
             #create a new User model object
-            new_user = User(name=uname, password_hash=pwd_hash, emailid=email)
+            new_user = User(name=uname, fname=fname, lname=lname, password_hash=pwd_hash, 
+            emailid=email, number=number, address=address)
             db.session.add(new_user)
             db.session.commit()
             #commit to the database and redirect to HTML page
