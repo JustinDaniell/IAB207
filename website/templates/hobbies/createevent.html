@@ -1,7 +1,132 @@
 {% extends 'base.html' %}
 
-{% from 'bootstrap5/form.html' import render_form %}
+{% from "bootstrap5/form.html" import render_form %}
+
+{% block header %}{% endblock %}
 
 {% block content %}
+
+<main style="margin-top: 70px;">
+    <form method="post" action="{{ url_for('main.create')}}" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <h1 style="text-align: center;">My Event</h1>
+
+    <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+        <div class="row">
+            <div class="col-md-2 col-12">
+                <div class="row">
+                    {{ form.image.label }} 
+                </div>
+                <div class="row">
+                    {{ form.image() }} 
+                </div>
+            </div>
+            <div class="col-4 grid-item">
+                    <div class="group">
+                        {{ form.name.label }}
+                        {{ form.name() }}
+                    </div>
+                    <div class="group">
+                        {{ form.host_contact.label }}
+                        {{ form.host_contact() }}
+                    </div>
+                    <div class="group">
+                        {{ form.location.label }}
+                        {{ form.location() }}
+                        <br>
+                    </div>
+                    <div class="group">
+                        {{ form.activity.label }}
+                        {{ form.activity() }}
+                    </div>
+            </div>
+            <div class="col-5 grid-item">
+                <div class="group">
+                    {{ form.description.label }}
+                    {{ form.description }}
+                </div>
+                <br>
+                <details>
+                    <summary>Experience</summary>
+                    <ul style="list-style: none; columns: 2;">
+                        {% for subfield in form.experience.checkboxes %}
+                            <li>
+                                <label>{{ subfield() }} {{ subfield.label }}</label>  <!-- Render each checkbox -->
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </details>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <div class="group">
+                    {{ form.host_name.label }}
+                    {{ form.host_name() }}
+                </div>
+                <div class="group">
+                    {{ form.host_experience.label }}
+                    {{ form.host_experience() }}
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="row">
+                    <div class="form-row">
+                        <div class="group" style="width: 30%;">
+                            {{ form.tickets_avaliable.label }}
+                            {{ form.tickets_avaliable() }}
+                        </div>
+                        <div class="group" style="width: 30%;">
+                            {{ form.tickets_price.label }}
+                            {{ form.tickets_price() }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-row">
+                        <div class="group" style="width: 40%;">
+                            {{ form.start_date.label }}
+                            {{ form.start_date(id="sDate") }}
+                        </div>
+                        <div class="group" style="width: 40%;">
+                            {{ form.end_date.label }}
+                            {{ form.end_date(id="eDate") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-row">
+                        <div class="group" style="width: 40%;">
+                            {{ form.start_time.label }}
+                            {{ form.start_time(id="sTime") }}
+                        </div>
+                        <div class="group" style="width: 40%;">
+                            {{ form.end_time.label }}
+                            {{ form.end_time(id="eTime") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-row">
+                        <div class="group" style="width: 60%;">
+                            {{ form.host_phone.label }}
+                            {{ form.host_phone() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-12" style="margin-top: 7%; margin-left: 2%;">
+                <div>
+                    <input class="btn btn-success w-75 p-3" type="submit" value="Update Event">
+                    <br>
+                    <small>By selecting <b>Update Event,</b> you are agreeing to Hobby Crunch's <a href="#">Terms
+                            and
+                            Conditions</a></small>
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</main>
 
 {% endblock %}

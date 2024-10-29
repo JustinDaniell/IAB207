@@ -23,14 +23,21 @@ class User(db.Model,UserMixin):
 
 class Event(db.Model,UserMixin):
     __tablename__ = 'events'
+
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80))
-    description = db.Column(db.String(200))
+    name = db.Column(db.String(80), nullable=False)
+    description = db.Column(db.String(200), nullable=False)
     image = db.Column(db.String(400))
-    currency = db.Column(db.String(3))
-    # ... Create the Comments db.relationship
-	# relation to call event.comments and comment.event
-    comments = db.relationship('Comment', backref='event')
+    location = db.Column(db.String(100), nullable=False)
+    activity = db.Column(db.String(30), nullable=False)
+    host_name = db.Column(db.String(100), nullable=False)
+    host_experience = db.Column(db.String(200))
+    host_contact = db.Column(db.String(100), nullable=False)
+    experience_required = db.Column(db.String(100), nullable=False)
+	# relations
+    comments = db.relationship('Comment', backref='event', lazy='dynamic')
+    tickets = db.relationship('Ticket', backref='event')
+    status = db.relationship('Status', backref='event')
 
 	# string print method
     def __repr__(self):
@@ -48,3 +55,30 @@ class Comment(db.Model):
     # string print method
     def __repr__(self):
         return f"Comment: {self.text}"
+    
+class Ticket(db.Model):
+    __tablename__ = 'tickets'
+
+    id = db.Column(db.Integer, primary_key=True)
+    price = db.Column(db.Float(10), index=True, nullable=False)
+    event_date = db.Column(db.Date)
+    start_time = db.Column(db.Time)
+    end_time = db.Column(db.Time)
+    # relations
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def _repr_(self):
+        return f"id: {self.id}"
+    
+class Status(db.Model):
+    __tablename__ = 'status'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.Float(10), index=True, nullable=False)
+    ticket_count = db.Column(db.Date)
+    # relation
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'), unique=True, nullable=False)
+
+    def _repr_(self):
+        return f"Status: {self.status}"

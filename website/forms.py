@@ -1,19 +1,50 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, IntegerField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, IntegerField, SelectField, SelectMultipleField, FormField, DateField, TimeField
 from wtforms.validators import InputRequired, Email, EqualTo
 from flask_wtf.file import FileRequired, FileField, FileAllowed
+from wtforms.widgets import CheckboxInput
 
 ALLOWED_FILE = {'PNG', 'JPG', 'JPEG', 'png', 'jpg', 'jpeg'}
 
+class ExperienceForm(FlaskForm):
+    experience_levels = [
+        ('Beginner', 'Beginner'),
+        ('Intermediate', 'Intermediate'),
+        ('Advanced', 'Advanced'),
+        ('Expert', 'Expert')
+    ]
+    
+    # Dynamically creates a checkbox for each experience level
+    checkboxes = SelectMultipleField('Experience', choices=experience_levels, option_widget=CheckboxInput())
+
 # Create new event
 class EventForm(FlaskForm):
-  name = StringField('Country', validators=[InputRequired()])
-  description = TextAreaField('Description', 
+  name = StringField('Event Name:', validators=[InputRequired()])
+  description = TextAreaField('Description:', render_kw={"style": "resize: none; height: 200px;"}, 
             validators=[InputRequired()])
-  image = FileField('Destination Image', validators=[
-    FileRequired(message='Image cannot be empty'),
+  image = FileField('Event Image:', validators=[
+    # FileRequired(message='Image cannot be empty'),
     FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
-  currency = StringField('Currency', validators=[InputRequired()])
+  location = StringField('Location:', validators=[InputRequired()])
+  activity = SelectField('Activity:', choices=[
+            ('Arts', 'Arts & Craft'),
+            ('Sports', 'Sports & Fitness'),
+            ('Music', 'Music'),
+            ('bGames', 'Board Games'),
+            ('eGames', 'Electronic Games'),
+            ('Education', 'Education')], validators=[InputRequired()])
+  host_name = StringField('Host Name:', validators=[InputRequired()])
+  host_experience = TextAreaField('Host Experience:', render_kw={"style": "resize: none; height: 200px;"}, 
+            validators=[InputRequired()])
+  host_contact = StringField('Host Contact:', validators=[InputRequired()])
+  host_phone = StringField('Host Phone:', validators=[InputRequired()])
+  experience = FormField(ExperienceForm)  # Embed the experience form
+  tickets_avaliable = IntegerField('Tickets Avaliable:', validators=[InputRequired()])
+  tickets_price = IntegerField('Tickets Price:', validators=[InputRequired()])
+  start_date = DateField('Start Date', format='%Y-%m-%d')
+  end_date = DateField('End Date', format='%Y-%m-%d')
+  start_time = TimeField('Start Time', format='%H:%M')
+  end_time = TimeField('End Time', format='%H:%M')
   submit = SubmitField("Create")
     
 # User login

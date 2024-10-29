@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from .models import Event, Comment
-from .forms import EventForm, CommentForm
+from .forms import CommentForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -12,25 +12,7 @@ def show(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
     # create the comment form
     cform = CommentForm()    
-    return render_template('events/show.html', event=event, form=cform)
-
-@eventbp.route('/create', methods=['GET', 'POST'])
-def create():
-  print('Method type: ', request.method)
-  form = EventForm()
-  if form.validate_on_submit():
-    # call the function that checks and returns image
-    db_file_path = check_upload_file(form)
-    event = Event(name=form.name.data, description=form.description.data, 
-    image=db_file_path, currency=form.currency.data)
-    # add the object to the db session
-    db.session.add(event)
-    # commit to the database
-    db.session.commit()
-    print('Successfully created new event', 'success')
-    # Always end with redirect when form is valid
-    return redirect(url_for('event.create'))
-  return render_template('events/create.html', form=form)
+    return render_template('events/show.html', event=event, form=cform) 
 
 def check_upload_file(form):
   # get file data from form  
