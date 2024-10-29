@@ -25,7 +25,6 @@ class EventForm(FlaskForm):
   image = FileField('Event Image:', validators=[
     # FileRequired(message='Image cannot be empty'),
     FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
-<<<<<<< Updated upstream
   location = StringField('Location:', validators=[InputRequired()])
   activity = SelectField('Activity:', choices=[
             ('Arts', 'Arts & Craft'),
@@ -46,16 +45,6 @@ class EventForm(FlaskForm):
   end_date = DateField('End Date', format='%Y-%m-%d')
   start_time = TimeField('Start Time', format='%H:%M')
   end_time = TimeField('End Time', format='%H:%M')
-=======
-  activity = StringField('Activity', validators=[InputRequired()])
-  host_name = StringField('Host Name', validators=[InputRequired()])
-  host_experience = StringField('Host Experience', validators=[InputRequired()])
-  host_contact_info = StringField('Host Contact Info', validators=[InputRequired()])
-  ticket_price = IntegerField('Ticket Price', validators=[InputRequired()])
-  event_date = StringField('Event Date', validators=[InputRequired()])
-  event_start_time = StringField('Event Start Time', validators=[InputRequired()])
-  event_end_time = StringField('Event End Time', validators=[InputRequired()])
->>>>>>> Stashed changes
   submit = SubmitField("Create")
     
 # User login

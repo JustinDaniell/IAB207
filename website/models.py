@@ -56,7 +56,6 @@ class Comment(db.Model):
     def __repr__(self):
         return f"Comment: {self.text}"
     
-<<<<<<< Updated upstream
 class Ticket(db.Model):
     __tablename__ = 'tickets'
 
@@ -74,38 +73,12 @@ class Ticket(db.Model):
     
 class Status(db.Model):
     __tablename__ = 'status'
-=======
-class Status(db.Model):
-    _tablename_ = 'status'
->>>>>>> Stashed changes
     
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.Float(10), index=True, nullable=False)
     ticket_count = db.Column(db.Date)
     # relation
-<<<<<<< Updated upstream
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), unique=True, nullable=False)
 
     def _repr_(self):
         return f"Status: {self.status}"
-=======
-    event_id = db.Column(db.Integer, db.ForeignKey('event.id'), unique=True, nullable=False)
-    def _repr_(self):
-        return f"Status: {self.status}"
-    
-class Ticket(db.Model):
-    _tablename_ = 'tickets'
-    id = db.Column(db.Integer, primary_key=True)
-    price = db.Column(db.Float(10), index=True, nullable=False)
-    event_date = db.Column(db.Date)
-    start_time = db.Column(db.Time)
-    end_time = db.Column(db.Time)
-    # Define the one-to-many relationship with the Room model
-    event_id = db.relationship('Event', backref='hotel', lazy='dynamic')
-    destination_id = db.Column(db.Integer, db.ForeignKey('destinations.id'))
-    # relations
-    event_id = db.Column(db.Integer, db.ForeignKey('event.id'), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    def _repr_(self):
-        return f"id: {self.id}"
->>>>>>> Stashed changes
