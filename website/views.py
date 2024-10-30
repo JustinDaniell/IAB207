@@ -1,9 +1,10 @@
 from flask import Blueprint, render_template, request, redirect, url_for
-from .models import Event, User
+from .models import Event, User, Ticket, Status
 from .forms import EventForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
+from datetime import datetime
 
 mainbp = Blueprint('main', __name__)
 
@@ -78,11 +79,30 @@ def create():
     activity=form.activity.data, host_name=form.host_name.data, 
     host_experience=form.host_experience.data, host_contact=form.host_contact.data,
     experience_required=experience_str)
-    # add the object to the db session
+    # add the objects to the db session
     db.session.add(event)
     # commit to the database
     db.session.commit()
     print('Successfully created new event', 'success')
+    # create tickets for the event
+    for _ in range(form.tickets_avaliable.data):
+       ticket = Ticket(price=form.tickets_price.data, start_date=form.start_date.data,
+       end_date=form.end_date.data, start_time=form.start_time.data, end_time=form.end_time.data, event_id=event.id)
+       db.session.add(ticket)
+    db.session.commit()
+    # create status for the event
+    if form.start_date.data < datetime.now().date():
+        current_status = 'Inactive'
+    elif form.start_time.data < datetime.now().time() and form.start_date.data == datetime.now().date():
+        current_status = 'Inactive'
+    elif form.tickets_avaliable.data == 0:
+        current_status = 'Sold Out'
+    else:
+       current_status = 'Open'
+    event_status = Status(status=current_status, avaliable_tickets=form.tickets_avaliable.data, event_id=event.id)
+    db.session.add(event_status)
+    db.session.commit()
+
     # Always end with redirect when form is valid
 
     #### temporarily redirect to image - redir to event's page later

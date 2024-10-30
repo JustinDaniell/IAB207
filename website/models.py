@@ -61,7 +61,8 @@ class Ticket(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     price = db.Column(db.Float(10), index=True, nullable=False)
-    event_date = db.Column(db.Date)
+    start_date = db.Column(db.Date)
+    end_date = db.Column(db.Date)
     start_time = db.Column(db.Time)
     end_time = db.Column(db.Time)
     # relations
@@ -75,8 +76,8 @@ class Status(db.Model):
     __tablename__ = 'status'
     
     id = db.Column(db.Integer, primary_key=True)
-    status = db.Column(db.Float(10), index=True, nullable=False)
-    ticket_count = db.Column(db.Date)
+    status = db.Column(db.String(10), index=True, nullable=False)
+    avaliable_tickets = db.Column(db.Integer, nullable=False)
     # relation
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), unique=True, nullable=False)
 
