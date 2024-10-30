@@ -67,21 +67,26 @@ def create():
   print('Method type: ', request.method)
   form = EventForm()
   if form.validate_on_submit():
+    # get the selected experience levels and convert to string
+    experience_selected = form.experience_required.data.get('checkboxes', [])
+    experience_str = ', '.join(experience_selected)
+
     # call the function that checks and returns image
     db_file_path = check_upload_file(form)
     event = Event(name=form.name.data, description=form.description.data, 
     image=db_file_path, location=form.location.data, 
     activity=form.activity.data, host_name=form.host_name.data, 
     host_experience=form.host_experience.data, host_contact=form.host_contact.data,
-    experience_required=form.experience_required.data)
+    experience_required=experience_str)
     # add the object to the db session
     db.session.add(event)
     # commit to the database
     db.session.commit()
     print('Successfully created new event', 'success')
     # Always end with redirect when form is valid
-    return redirect(url_for('event.create'))
+
+    #### temporarily redirect to image - redir to event's page later
+    return redirect(url_for('main.index'))
   else:
    print(form.errors)
-   form.image.data = None
   return render_template('hobbies/createevent.html', form=form)

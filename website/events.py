@@ -28,6 +28,7 @@ def check_upload_file(form):
   fp.save(upload_path)
   return db_upload_path
 
+
 @eventbp.route('/<id>/comment', methods=['GET', 'POST'])  
 def comment(id):  
     form = CommentForm()  

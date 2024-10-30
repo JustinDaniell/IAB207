@@ -23,7 +23,7 @@ class EventForm(FlaskForm):
   description = TextAreaField('Description:', render_kw={"style": "resize: none; height: 200px;"}, 
             validators=[InputRequired()])
   image = FileField('Event Image:', validators=[
-    # FileRequired(message='Image cannot be empty'),
+    FileRequired(message='Image cannot be empty'),
     FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
   location = StringField('Location:', validators=[InputRequired()])
   activity = SelectField('Activity:', choices=[
@@ -38,7 +38,7 @@ class EventForm(FlaskForm):
             validators=[InputRequired()])
   host_contact = StringField('Host Contact:', validators=[InputRequired()])
   host_phone = StringField('Host Phone:', validators=[InputRequired()])
-  experience = FormField(ExperienceForm)  # Embed the experience form
+  experience_required = FormField(ExperienceForm)  # Embed the experience form
   tickets_avaliable = IntegerField('Tickets Avaliable:', validators=[InputRequired()])
   tickets_price = IntegerField('Tickets Price:', validators=[InputRequired()])
   start_date = DateField('Start Date', format='%Y-%m-%d')

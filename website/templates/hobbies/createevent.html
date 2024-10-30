@@ -19,6 +19,13 @@
                 </div>
                 <div class="row">
                     {{ form.image() }} 
+                    {% if form.image.errors %}
+                <div class="alert alert-danger">
+                    {% for error in form.image.errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
                 </div>
             </div>
             <div class="col-4 grid-item">
@@ -49,7 +56,7 @@
                 <details>
                     <summary>Experience</summary>
                     <ul style="list-style: none; columns: 2;">
-                        {% for subfield in form.experience.checkboxes %}
+                        {% for subfield in form.experience_required.checkboxes %}
                             <li>
                                 <label>{{ subfield() }} {{ subfield.label }}</label>  <!-- Render each checkbox -->
                             </li>
