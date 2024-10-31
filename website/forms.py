@@ -38,6 +38,11 @@ class EventForm(FlaskForm):
             ('bGames', 'Board Games'),
             ('eGames', 'Electronic Games'),
             ('Education', 'Education')], validators=[InputRequired()])
+  status = SelectField('Activity:', choices=[
+            ('Open'),
+            ('Inactive'),
+            ('Sold Out'),
+            ('Cancelled')], validators=[InputRequired()])
   host_name = StringField('Host Name:', validators=[InputRequired()])
   host_experience = TextAreaField('Host Experience:', render_kw={"style": "resize: none; height: 200px;"}, 
             validators=[InputRequired()])
