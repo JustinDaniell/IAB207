@@ -18,21 +18,18 @@
                               src="{{ event.image }}" alt="event picture">
             </div>
             <div class="col-4 grid-item">
+                <p class="justify-text"><span style="font-weight: 600;">Tickets left: </span><b>{{ num_tickets }}</b></p>
+                <p class="justify-text" style="font-weight: 600;">Price per Ticket: <span class="price">${{ tickets.price }}</p><br>
                 <div class="form-group-details">
                     <label for="numTicket">Number of Tickets:</label>
                     {{ form.num_tickets() }}
                 </div><br>
-                <h6><b>1x</b> Ticket to Beginner Painting Lessons</h6>
-                <h6 class="justify-tex t"><b>Total: </b><span class="price">$100</span></h6>
             </div>
             <div class="col-5 grid-item">
                 <p class="justify-text"><span style="font-weight: 600;">Event: </span>{{ event.name }}</p>
-
                 <p class="justify-text"><span style="font-weight: 600;">Located at: </span>{{ event.location }}</p>
                 <p class="justify-text"><span style="font-weight: 600;">Start Time: </span>{{ tickets.start_time }}, {{ tickets.start_date.strftime('%B %d, %Y') }}</p>
                 <p class="justify-text"><span style="font-weight: 600;">End Time: </span>{{ tickets.end_time }}, {{ tickets.end_date.strftime('%B %d, %Y') }}</p>
-                <p class="justify-text" style="font-weight: 600;">Price per Ticket: <span class="price">${{ tickets.price }}</p>
-                <p class="justify-text"><span style="font-weight: 600;">Tickets left: </span><b>{{ num_tickets }}</b></p>
             </div>
         </div>
         <div class="row">
