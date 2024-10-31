@@ -1,152 +1,82 @@
-<!doctype html>
-<html lang="en">
+{% extends 'base.html' %}
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+{% from "bootstrap5/form.html" import render_form %}
 
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+{% block header %}{% endblock %}
 
-    <title>Hobby Crunch</title>
-    <link rel="stylesheet" href="static/style/styles.css">
+{% block content %}
 
-    <!-- navbar-brand font -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Joti+One&display=swap" rel="stylesheet">
+<main style="margin-top: 70px;">
+    <form method="post" action="{{ url_for('main.buy', event_id=event.id)}}" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <h1 style="text-align: center;">Purchase Tickets</h1>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</head>
-
-<body>
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-orange">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="index.html">Hobby Crunch</a>
-                <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav ms-auto">
-                        <a href="manageTickets.html" class="btn nav-btn ms-2">My Tickets</a>
-                        <a href="myEvents.html" class="btn nav-btn ms-2">My Events</a>
-                        <a href="#" class="btn nav-btn ms-2"><u>Username</u></a>
-                    </ul>
-                </div>
+    <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+        <div class="row">
+            <div class="col-md-3 col-12">
+                <img class="card-img-top"
+                              src="{{ event.image }}" alt="event picture">
             </div>
-        </nav>
-    </header>
-
-    <main style="margin-top: 70px;">
-
-        <h1 style="text-align: center;">Purchase Tickets</h1>
-
-        <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
-            <div class="row">
-                <div class="col-md-3 col-12">
-                    <img src="static/img/painting.jpg" class="d-block col-12" alt="Beginners Painting Event">
-                </div>
-                <div class="col-4 grid-item">
-                    <div class="form-group-details">
-                        <label for="numTicket">Number of Tickets:</label>
-                        <input type="number" id="numTicket" name="numTicket" value="1" min="1" style="width: 50px;">
-                    </div><br>
-                    <h6><b>1x</b> Ticket to Beginner Painting Lessons</h6>
-                    <h6 class="justify-text"><b>Total: </b><span class="price">$100</span></h6>
-                </div>
-                <div class="col-5 grid-item">
-                    <p class="justify-text"><span style="font-weight: 600;">Event: </span>Beginner Painting Lessons</p>
-
-                    <p class="justify-text"><span style="font-weight: 600;">Located at: </span>123 Art Rd</p>
-                    <p class="justify-text"><span style="font-weight: 600;">Start Time: </span>9:00am, 2024, 16
-                        September</p>
-                    <p class="justify-text"><span style="font-weight: 600;">End Time: </span>12:00pm, 2024, 16 September
-                    </p>
-                    <p class="justify-text" style="font-weight: 600;">Price per Ticket: <span class="price">$100</p>
-                    <p class="justify-text"><span style="font-weight: 600;">Tickets left: </span><b>15</b></p>
-                </div>
+            <div class="col-4 grid-item">
+                <div class="form-group-details">
+                    <label for="numTicket">Number of Tickets:</label>
+                    {{ form.num_tickets() }}
+                </div><br>
+                <h6><b>1x</b> Ticket to Beginner Painting Lessons</h6>
+                <h6 class="justify-tex t"><b>Total: </b><span class="price">$100</span></h6>
             </div>
-            <div class="row">
-                <div class="col-lg-8 col-12">
-                    <div class="row">
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group" style="width: 48%;">
-                                    <label for="fname">First name:</label>
-                                    <input type="text" id="fname" name="fname" value="John">
-                                </div>
-                                <div class="form-group">
-                                    <label for="lname">Last name:</label>
-                                    <input type="text" id="lname" name="lname" value="Doe">
-                                </div>
+            <div class="col-5 grid-item">
+                <p class="justify-text"><span style="font-weight: 600;">Event: </span>{{ event.name }}</p>
+
+                <p class="justify-text"><span style="font-weight: 600;">Located at: </span>{{ event.location }}</p>
+                <p class="justify-text"><span style="font-weight: 600;">Start Time: </span>{{ tickets.start_time }}, {{ tickets.start_date.strftime('%B %d, %Y') }}</p>
+                <p class="justify-text"><span style="font-weight: 600;">End Time: </span>{{ tickets.end_time }}, {{ tickets.end_date.strftime('%B %d, %Y') }}</p>
+                <p class="justify-text" style="font-weight: 600;">Price per Ticket: <span class="price">${{ tickets.price }}</p>
+                <p class="justify-text"><span style="font-weight: 600;">Tickets left: </span><b>{{ num_tickets }}</b></p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-8 col-12">
+                <div class="row">
+                        <div class="form-row">
+                            <div class="form-group" style="width: 48%;">
+                                <label for="fname"><b>First name:</b></label>
+                                {{ current_user.fname }}
                             </div>
-                        </form>
-                    </div>
-                    <div class="row">
-                        <form>
                             <div class="form-group">
-                            <label for="email">Email:</label>
-                            <input type="text" id="email" name="email" value="youremail@email.com"><br>
-                        </div>
-                        </form>
-                    </div>
-                    <div class="row">
-                        <form>
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="phone">Phone:</label>
-                                    <input type="text" id="phone" name="phone" placeholder="+61 123 456 789">
-                                </div>
-                                <div class="form-group">
-                                    <label for="cdetails">Card Details:</label>
-                                    <input type="text" id="cdetails" name="cdetails" placeholder="XXXX XXXX XXXX XXXX">
-                                </div>
+                                <label for="lname"><b>Last name:</b></label>
+                                {{ current_user.lname }}
                             </div>
-                        </form>
+                        </div>
+                </div>
+                <div class="row">
+                        <div class="form-group">
+                        <label for="email"><b>Email:</b></label>
+                        {{ current_user.emailid }}
                     </div>
                 </div>
-                <div class="col-md-3 col-12" style="margin-top: 7%; margin-right: 7%;">
-                    <div>
-                        <button class="btn btn-warning w-50 p-3" id="placeOrder">Place Order</button><br>
-                        <small>By selecting <b>Place Order,</b> you are agreeing to Hobby Crunch's <a href="#">Terms and Conditions</a></small>
-                    </div>
+                <div class="row">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="phone"><b>Phone:</b></label>
+                                {{ current_user.number }}
+                            </div>
+                            <div class="form-group">
+                                <label for="cdetails"><b>Card Details:</b></label>
+                                {{ form.card() }}
+                            </div>
+                        </div>
+                </div>
+            </div>
+            <div class="col-md-3 col-12" style="margin-top: 7%; margin-right: 7%;">
+                <div>
+                    <button class="btn btn-warning w-50 p-3" type="submit" id="placeOrder">Place Order</button><br>
+                    <small>By selecting <b>Place Order,</b> you are agreeing to Hobby Crunch's <a href="#">Terms and Conditions</a></small>
                 </div>
             </div>
         </div>
+    </div>
+    </form>
+</main> 
 
-    </main>
-
-    <!-- Footer -->
-    <footer>
-        <div>
-            <ul class="d-flex flex-wrap justify-content-center p-1" style="list-style-type: none;">
-                <li class="px-2" style="border-right: 1px solid rgb(0, 0, 0)">
-                    <a href="#">Contact</a>
-                </li>
-                <li class="px-2" style="border-right: 1px solid rgb(0, 0, 0)">
-                    <a href="#">About</a>
-                </li>
-                <li class="px-2" style="border-right: 1px solid rgb(0, 0, 0)">
-                    <a href="#">Privacy Policy</a>
-                </li>
-                <li class="px-2" style="border-right: 1px solid rgb(0, 0, 0)">
-                    <a href="#">Conditions of Use</a>
-                </li>
-                <li class="px-2">
-                    <a href="#">Developers</a>
-                </li>
-            </ul>
-        </div> 
-        © 2024 Hobby Crunch
-    </footer>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
-</body>
-
-</html>
+{% endblock %}

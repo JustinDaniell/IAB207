@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from .models import Event, User, Ticket, Status
-from .forms import EventForm
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from .models import Event, Ticket, Status
+from .forms import EventForm, TicketForm
+from flask_login import current_user, login_required
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -102,7 +103,6 @@ def create():
     event_status = Status(status=current_status, avaliable_tickets=form.tickets_avaliable.data, event_id=event.id)
     db.session.add(event_status)
     db.session.commit()
-
     # Always end with redirect when form is valid
 
     #### temporarily redirect to image - redir to event's page later
@@ -110,3 +110,31 @@ def create():
   else:
    print(form.errors)
   return render_template('hobbies/createevent.html', form=form)
+
+@mainbp.route('/buy', methods=['GET', 'POST'])
+@login_required
+def buy():
+  event_id = request.args.get('event_id')
+  event = db.session.scalar(db.select(Event).where(Event.id == event_id))
+  print('Method type: ', request.method)
+  print('user id: ', current_user)
+  available_tickets = db.session.query(Ticket).filter(
+    Ticket.event_id == event_id,
+    Ticket.user_id.is_(None)).all()
+  form = TicketForm()
+  if form.validate_on_submit():
+    if form.num_tickets.data <= len(available_tickets):
+      for ticket in available_tickets[:form.num_tickets.data]:
+         ticket.user_id = current_user.id
+      db.session.commit()
+      # flash('Tickets bought successfully', 'success')
+    else:
+      print(form.errors)
+      # flash('Not enough tickets available', 'error')
+      return render_template('buyTickets.html', form=form, tickets=available_tickets[0], event=event, num_tickets=len(available_tickets), user=current_user)
+
+    #### temporarily redirect to index - redir to tickets page later
+    return redirect(url_for('main.index'))
+  else:
+   print(form.errors)
+  return render_template('buyTickets.html', form=form, tickets=available_tickets[0], event=event, num_tickets=len(available_tickets), user=current_user)
