@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for
 from .models import Event, Comment
-from .forms import CommentForm
+from .forms import CommentForm, EventForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
@@ -12,7 +12,7 @@ def show(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
     # create the comment form
     cform = CommentForm()    
-    return render_template('events/show.html', event=event, form=cform) 
+    return render_template('hobbies/showevent.html', event=event, form=cform) 
 
 def check_upload_file(form):
   # get file data from form  

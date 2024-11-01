@@ -4,4 +4,134 @@
 
 {% block content %}
 
+<main style="margin-top: 70px;">
+
+    <h1 style="text-align: center;">{{ event.name }}</h1>
+
+    <!--Container splitting Image, Event Description and Place Order-->
+    <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+        <div class="row">
+            <!-- 10-column content aligned left -->
+            <div class="col-xl-10 col-md-9">
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <img src="{{ event.image }}" class="d-block col-12" alt="Event Image">
+                    </div>
+                    <div class="col-md-7 col-12" style="margin-left: 2%;">
+                        <div class="row">
+                            <div class="col-12">
+                                <p> {{ event.description }} </p>
+                            </div>
+                            <div class="col-6 grid-item">
+                                <p>Stuiable for <span style="font-weight: 600;"> {{event.experience_required}} </span>
+                                    levels
+                                    of skill.</p>
+                                <p><span style="font-weight: 600;">Located at: </span> {{ event.location }} </p>
+                                <p><span style="font-weight: 600;">Start Time: </span> {{ event.start_time }}, {{ event.start_date }} </p>
+                                <p><span style="font-weight: 600;">End Time: </span> {{ event.end_time }}, {{ event.end_date }}</p>
+                                <p style="font-weight: 600;">Price: <span class="price"> {{ event.tickets_price }} </p>
+                                <p><span style="font-weight: 600;">Number of Tickets: </span> {{ event.tickets }} </p>
+                            </div>
+                            <div class="col-6">
+                                <p><span style="font-weight: 600;">Host: </span> {{ event.host_name }} </p>
+                                <p><span style="font-weight: 600;">Phone: </span> {{ event.host_phone }} </p>
+                                <p><span style="font-weight: 600;">Email: </span> {{ event.host_contact }} </p>
+                                <br>
+                                <p><span style="font-weight: 600;">Expertise:</p>
+                                <p> {{ event.host_experience }} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <h6 style="margin-left: 2%;">user's name</h6>
+                        <form>
+                            <input type="comment" id="comTitle" name="comTitle" placeholder="Title">
+                        </form>
+                    </div>
+                    <div class="col-6">
+                        <h5 style="text-align: right; margin-right: 5%;">Day Month, Year</h5>
+                    </div>
+                    <div class="col-9" style="margin-left: 2%;">
+                        <form>
+                            <textarea type="comment" placeholder="Comment"></textarea>
+                        </form>
+                    </div>
+                    <div class="col-2" style="margin-left: 6%; margin-top: 3%;">
+                        <a href="#">
+                            <input class="btn btn-warning" style="float: right;" type="submit" value="Leave Comment">
+                        </a>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <h6 style="margin-left: 2%;">John Smith</h6>
+                        <h3 style="margin-left: 2%;">Fantastic!</h3>
+                    </div>
+                    <div class="col-6">
+                        <h5 style="text-align: right; margin-right: 5%;">12 June, 2024</h5>
+                    </div>
+                    <div class="col-11" style="margin-left: 2%;">
+                        <p>Amazing experience learning from Amanda!</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <h6 style="margin-left: 2%;">Jack Black</h6>
+                        <h3 style="margin-left: 2%;">Amazing Lesson!</h3>
+                    </div>
+                    <div class="col-6">
+                        <h5 style="text-align: right; margin-right: 5%;">1 September, 2024</h5>
+                    </div>
+                    <div class="col-11" style="margin-left: 2%;">
+                        <p>I had an amazing time as a first time painter! Amanda really encouraged us to explore our own styles and always around to lend a hand if we ever needed one.</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-6">
+                        <h6 style="margin-left: 2%;">Sally Blue</h6>
+                        <h3 style="margin-left: 2%;">Expensive! Not worth at all!</h3>
+                    </div>
+                    <div class="col-6">
+                        <h5 style="text-align: right; margin-right: 5%;">23 December, 2023</h5>
+                    </div>
+                    <div class="col-11" style="margin-left: 2%;">
+                        <p>My experience was quite poor, especially considing a $100 price tag. The lesson had no stucture and the instructor didn’t seem engaged with all the students and hardly gave any feedback. I ABSOLUTELY do NOT recommend this lesson!</p>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <!-- Buy Tickets -->
+            <div class="col-xl-2 col-md-3 col-2">
+                <div class="position-sticky" style="top: 70px;">
+                    <div class="container">
+                        <div class="card p-3" style="width: 200px;">
+                            <h4 class="card-title">Tickets for:</h4>
+                            <h6 style="font-weight: 600;" class="card-title">Beginner Painting Lessons</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <label style="font-weight: 600;" for="ticketQuantity" class="form-label mb-0">Quantity:</label>
+                                <div class="d-flex align-items-center">
+                                    <input type="number" id="ticketQuantity" value="1" min="1" class="form-control text-center" style="width: 60px;">
+                                </div>
+                            </div>
+                            <p style="font-weight: 600;">Total Price: <span class="price">$100</span></p>
+                            <br>
+                            <a href="buyTickets.html">
+                            <a href="#">
+                                <input class="btn btn-warning w-100" type="submit" value="Place Order">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
 {% endblock %}
