@@ -103,11 +103,8 @@ def create():
      else:
         event_id = int(event_id)
      if 'action' in request.form:
-        print('action')
         temp_status = 'Open'
         if request.form['action'] == 'Cancel Event': # if cancelling event, remove all tickets and cancel status
-          print('if')
-          print('Cancelling event')
           form.tickets_avaliable.data = 0
           temp_status = 'cancelled'
           flash('Successfully cancelled event', 'success')
@@ -115,13 +112,10 @@ def create():
           try:
             form.validate_dates()
           except ValidationError as e:
-            print(e)  # Print the error message for debugging
-            form.start_date.errors.append(str(e))  # Add error to form if needed
+            flash(e, 'danger')
             print(form.errors)
             return render_template('hobbies/createevent.html', form=form)
           else:
-            print('elif')
-            print('Form validated')
             # get the selected experience levels and convert to string
             experience_str = ', '.join(form.experience_required.data)
             # call the function that checks and returns image
@@ -235,7 +229,7 @@ def buy():
       db.session.commit()
     else:
       print(form.errors)
-      flash('Not enough tickets available', 'error')
+      flash('Not enough tickets available', 'danger')
       return render_template('buyTickets.html', form=form, tickets=available_tickets[0], event=event, num_tickets=len(available_tickets), user=current_user)
     
     #### temporarily redirect to index - redir to tickets page later

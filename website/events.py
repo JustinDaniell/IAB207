@@ -46,8 +46,7 @@ def comment(id):
       db.session.add(comment) 
       db.session.commit() 
 
-      # flashing a message which needs to be handled by the html
-      # flash('Your comment has been added', 'success')  
+      # flashing a message which needs to be handled by the html  
       flash('Your comment has been added', 'success') 
     # using redirect sends a GET request to event.show
     return redirect(url_for('event.show', id=id))

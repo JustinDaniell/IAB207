@@ -103,13 +103,6 @@
                         <div class="group" style="width: 40%;">
                             {{ form.start_date.label }}
                             {{ form.start_date(id="sDate") }}
-                            {% if form.start_date.errors %}
-                                <div class="alert alert-danger">
-                                    {% for error in form.start_date.errors %}
-                                        <p>{{ error }}</p>
-                                    {% endfor %}
-                                </div>
-                            {% endif %}
                         </div>
                         <div class="group" style="width: 40%;">
                             {{ form.end_date.label }}

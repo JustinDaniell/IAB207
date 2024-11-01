@@ -27,10 +27,10 @@ def register():
             phone = db.session.scalar(db.select(User).where(User.number==number))
 
             if user:#this returns true when user is not None
-                flash('Username already exists, please try another')
+                flash('Username already exists, please try another', 'danger')
                 return redirect(url_for('auth.register'))
             if phone:#this returns true when phone is not None
-                flash('phone number already exists, please double check your number')
+                flash('phone number already exists, please double check your number', 'danger')
                 return redirect(url_for('auth.register'))
             
             # don't store the password in plaintext!

@@ -20,7 +20,11 @@
                 <!-- Events View -->
                 <div class="px-1">
                     <div class="card p-2">
-                        <a href="{{ url_for('event.show', id=event.id) }}">
+                        {% if event.tickets %}
+                            <a href="{{ url_for('event.show', id=event.id) }}">
+                        {% else %}
+                            <a href="{{ url_for('main.create', event_id=event.id) }}">
+                        {% endif %}
                             <div class="row">
                                 <img src="{{ event.image }}" class="d-block col-xl-4 col-lg-5 img-home" alt="Beginners Painting Event">
                                 <div class="col-xl-5 col-lg-3" style="margin-left: 10px;">
@@ -29,15 +33,17 @@
                                         <h4 style="margin-bottom: 0px;">{{ event.activity }}</h4>
                                         <p style="font-weight: 600;">{{ event.experience_required }}</p>
                                         <p><span style="font-weight: 600;">At: </span>123 Art Rd</p>
-                                        <p><span style="font-weight: 600;">Start Time: </span>{{ event.tickets[0].start_time.strftime('%H:%M') }}, {{ event.tickets[0].start_date.strftime('%B %d, %Y') }}</p>
-                                        <p><span style="font-weight: 600;">End Time: </span>{{ event.tickets[0].end_time.strftime('%H:%M') }}, {{ event.tickets[0].end_date.strftime('%B %d, %Y') }}</p>
-                                        <p style="font-weight: 600;">Price: <span class="price">${{ event.tickets[0].price }}</span>
-                                        </p>
+                                        {% if event.tickets %}
+                                            <p><span style="font-weight: 600;">Start Time: </span>{{ event.tickets[0].start_time.strftime('%H:%M') }}, {{ event.tickets[0].start_date.strftime('%B %d, %Y') }}</p>
+                                            <p><span style="font-weight: 600;">End Time: </span>{{ event.tickets[0].end_time.strftime('%H:%M') }}, {{ event.tickets[0].end_date.strftime('%B %d, %Y') }}</p>
+                                            <p style="font-weight: 600;">Price: <span class="price">${{ event.tickets[0].price }}</span></p>
+                                        {% endif %}
+                                        <p><span style="font-weight: 600;">Status: </span>{{ event.status[0].status }}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="row">
-                                <a href="createManage.html" class="btn btn-success mx-auto" style="width: 98%;">Manage Event</a>
+                                <a href="{{ url_for('main.create', event_id=event.id) }}" class="btn btn-success mx-auto" style="width: 98%;">Manage Event</a>
                             </div>
                         </a>
                     </div>
