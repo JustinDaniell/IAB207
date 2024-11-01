@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Event, Comment
+from .models import Event, Comment, Ticket, Status
 from .forms import CommentForm, EventForm
 from . import db
 import os
@@ -11,9 +11,11 @@ eventbp = Blueprint('event', __name__, url_prefix='/events')
 @eventbp.route('/<id>')
 def show(id):
     event = db.session.scalar(db.select(Event).where(Event.id==id))
+    tickets = db.session.scalars(db.select(Ticket).where(Ticket.event_id == event.id, Ticket.user_id == None)).first()
+    status = db.session.scalar(db.select(Status).where(Status.event_id == event.id))
     # create the comment form
     cform = CommentForm()    
-    return render_template('hobbies/showevent.html', event=event, form=cform) 
+    return render_template('hobbies/showevent.html', event=event, form=cform, ticket=tickets, status=status) 
 
 def check_upload_file(form):
   # get file data from form  

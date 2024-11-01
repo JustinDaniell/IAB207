@@ -137,6 +137,8 @@ def create():
               "host_contact": form.host_contact.data,
               "experience_required": experience_str,
               "location": form.location.data,
+              "host_phone": form.host_phone.data,
+              "host_id": current_user.id
             }
             if event_id:
               event_data["id"] = event_id if event_id else None

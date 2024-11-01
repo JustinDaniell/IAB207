@@ -39,7 +39,6 @@ class EventForm(FlaskForm):
             ('eGames', 'Electronic Games'),
             ('Education', 'Education')], validators=[InputRequired()])
   host_name = StringField('Host Name:', validators=[InputRequired()])
-  host_id = IntegerField('Host ID', validators=[InputRequired()])
   host_experience = TextAreaField('Host Experience:', render_kw={"style": "resize: none; height: 200px;"}, 
             validators=[InputRequired()])
   host_contact = IntegerField('Host Contact:', validators=[InputRequired()])

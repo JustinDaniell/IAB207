@@ -29,10 +29,10 @@
                                     levels
                                     of skill.</p>
                                 <p><span style="font-weight: 600;">Located at: </span> {{ event.location }} </p>
-                                <p><span style="font-weight: 600;">Start Time: </span> {{ event.start_time }}, {{ event.start_date }} </p>
-                                <p><span style="font-weight: 600;">End Time: </span> {{ event.end_time }}, {{ event.end_date }}</p>
-                                <p><span style="font-weight: 600;">Status: </span> {{ event.status }} </p>
-                                <p><span style="font-weight: 600;">Number of Tickets: </span> {{event.tickets}} </p>
+                                <p><span style="font-weight: 600;">Start Time: </span> {{ ticket.start_time.strftime('%H:%M') }}, {{ ticket.start_date.strftime('%B %d, %Y') }} </p>
+                                <p><span style="font-weight: 600;">End Time: </span> {{ ticket.end_time.strftime('%H:%M') }}, {{ ticket.end_date.strftime('%B %d, %Y') }}</p>
+                                <p><span style="font-weight: 600;">Status: </span> {{ status.status }} </p>
+                                <p><span style="font-weight: 600;">Number of Tickets: </span> {{status.avaliable_tickets}} </p>
                             </div>
                             <div class="col-6">
                                 <p><span style="font-weight: 600;">Avtivity: </span> {{ event.activity }} </p>
