@@ -55,7 +55,7 @@
                 </div>
 
                 <div class="row border-bottom">
-                    {{ render_form(form, "/events/{0}/comment".format(event.id)) }}
+                    {{ render_form(form, "/{0}/comment".format(event.id)) }}
                 </div>
 
                 {% for comment in event.comments %}

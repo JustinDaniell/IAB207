@@ -113,7 +113,7 @@
                                         {% endif %}
                                     </div>
                                 </div>
-                                {% if event.status[0].status == open %}
+                                {% if event.status[0].status == 'Open' %}
                                     <div class="card-footer">
                                         <a href="{{ url_for('event.show', id=event.id) }}" class="btn btn-danger">View
                                             Details</a>

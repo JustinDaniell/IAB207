@@ -59,7 +59,8 @@ def index():
 
     # Execute the query and get the results
     events = events_query.all()
-
+    for event in events:
+        print(event.status[0].status)
     # Order by `start_date` and limit to the first 3 results
     return render_template('index.html', events=events, events_temp=events_temp)  
 
