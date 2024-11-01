@@ -6,7 +6,7 @@ import os
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 
-eventbp = Blueprint('event', __name__, url_prefix='/events')
+eventbp = Blueprint('event', __name__)
 
 @eventbp.route('/<id>')
 def show(id):

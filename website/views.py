@@ -203,8 +203,7 @@ def create():
 def buy():
   event_id = request.args.get('event_id')
   event = db.session.scalar(db.select(Event).where(Event.id == event_id))
-  print('Method type: ', request.method)
-  print('user id: ', current_user.id)
+
   available_tickets = db.session.query(Ticket).filter(
     Ticket.event_id == event_id,
     Ticket.user_id.is_(None)).all()
@@ -214,7 +213,11 @@ def buy():
       new_order = Order(order_date=datetime.now(), user_id=current_user.id)
       db.session.add(new_order)
       db.session.flush()
-
+      if form.num_tickets.data == len(available_tickets):
+        status = db.session.scalar(db.select(Status).where(Status.event_id == event_id))
+        status.status = 'Sold Out'
+        status.available_tickets = 0
+        db.session.commit()
       for ticket in available_tickets[:form.num_tickets.data]:
         ticket.user_id = current_user.id
         ticket.order_id = new_order.id
