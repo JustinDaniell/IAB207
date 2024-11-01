@@ -1,6 +1,10 @@
-{% include "base.html" %}
+{% extends "base.html" %}
+
 {% from "bootstrap5/form.html" import render_form %}
-{% block body %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
 
 <div class="page-header">
     <h4>{{heading}}</h4>
