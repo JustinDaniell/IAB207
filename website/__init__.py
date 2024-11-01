@@ -1,8 +1,9 @@
 # import flask - from 'package' import 'Class'
-from flask import Flask, render_template
+from flask import Flask 
 from flask_bootstrap import Bootstrap
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
+from flask_wtf.csrf import CSRFProtect
 
 db = SQLAlchemy()
 
@@ -18,6 +19,14 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sitedata.sqlite'
     # initialise db with flask app
     db.init_app(app)
+
+    # file upload folder
+    UPLOAD_FOLDER = '/static/image'
+    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+    
+    #csrf protection
+    csrf = CSRFProtect()
+    csrf.init_app(app)   
 
     Bootstrap(app)
     
@@ -44,14 +53,5 @@ def create_app():
     
     from . import events
     app.register_blueprint(events.eventbp)
-
-    @app.errorhandler(404,) 
-    def not_found(e): 
-      return render_template("404.html"), 404
-   
-    @app.errorhandler(500)
-    def internal_server_error(e):
-    # note that we set the 500 status explicitly
-      return render_template('500.html'), 500
 
     return app

@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% from "bootstrap5/form.html" import render_form %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+
+<main style="margin-top: 70px;">
+    <h1 style="text-align: center;">My Tickets</h1>
+    <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+        <!-- Events View -->
+        <div class="row">
+            {% if tickets %}
+            {% for event_id, info in tickets.items() %}
+            <div class="row">
+                <!-- Events View -->
+                <div class="px-1">
+                    <div class="card p-2">
+                        <a href="eventDetails.html">
+                            <div class="row">
+                                <img src="{{ events[event_id].image }}" class="d-block col-xl-4 col-lg-5 img-home" alt="Beginners Painting Event">
+                                <div class="col-xl-5 col-lg-3" style="margin-left: 10px;">
+                                    <h2>{{ events[event_id].name }}</h2>
+                                    <div style="margin-left: 15px;">
+                                        <h4 style="margin-bottom: 0px;">{{ events[event_id].activity }}</h4>
+                                        <p style="font-weight: 600;">{{ events[event_id].experience_required }}</p>
+                                        <p><span style="font-weight: 600;">At: </span>{{ events[event_id].location }}</p>
+                                        <p><span style="font-weight: 600;">Start Time: </span>{{ info.start_time.strftime('%H:%M') }}, {{ info.start_date.strftime('%B %d, %Y') }}</p>
+                                        <p><span style="font-weight: 600;">End Time: </span>{{ info.end_time.strftime('%H:%M') }}, {{ info.end_date.strftime('%B %d, %Y') }}</p>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="col-xl-2 col-lg-2" style="margin-left: 10px;">
+                                    <div style="margin-top: 10%;">
+                                        <h4 style="margin-bottom: 0px;">Order Placed</h4>
+                                        <p><span style="font-weight: 600;">{{ info.order_date.strftime('%B %d, %Y') }} </span>{{ info.order_date.strftime('%H:%M') }}</p>
+                                        <p><span style="font-weight: 600;">Number of Tickets: </span>{{ info.count }}</p>
+                                        <p style="font-weight: 600;">Total: <span class="price">${{ info.total_price }}</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <h4 style="margin-left: 2%;">Order ID: <small style="font-weight: 400;">{{ info.order_id }}</small></h4>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div><br>
+            {% endfor %}
+            {% else %}
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">No tickets found!</h4>
+                <p>Looks like you haven't bought any tickets yet. Go to the <a href="/">home page</a> to buy tickets.</p>
+            {% endif %}
+        </div>
+    </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+
+{% from "bootstrap5/form.html" import render_form %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+
+<main style="margin-top: 70px;">
+
+    <h1 style="text-align: center;">{{ event.name }}</h1>
+
+    <!--Container splitting Image, Event Description and Place Order-->
+    <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+        <div class="row">
+            <!-- 10-column content aligned left -->
+            <div class="col-xl-10 col-md-9">
+                <div class="row">
+                    <div class="col-md-4 col-12">
+                        <img src="{{ event.image }}" class="d-block col-12" alt="Event Image">
+                    </div>
+                    <div class="col-md-7 col-12" style="margin-left: 2%;">
+                        <div class="row">
+                            <div class="col-12">
+                                <p> {{ event.description }} </p>
+                            </div>
+                            <div class="col-6 grid-item">
+                                <p>Stuiable for <span style="font-weight: 600;"> {{event.experience_required}} </span>
+                                    levels
+                                    of skill.</p>
+                                <p><span style="font-weight: 600;">Located at: </span> {{ event.location }} </p>
+                                <p><span style="font-weight: 600;">Start Time: </span> {{ ticket.start_time.strftime('%H:%M') }}, {{ ticket.start_date.strftime('%B %d, %Y') }} </p>
+                                <p><span style="font-weight: 600;">End Time: </span> {{ ticket.end_time.strftime('%H:%M') }}, {{ ticket.end_date.strftime('%B %d, %Y') }}</p>
+                                <p><span style="font-weight: 600;">Status: </span> {{ status.status }} </p>
+                                <p><span style="font-weight: 600;">Number of Tickets: </span> {{status.avaliable_tickets}} </p>
+                            </div>
+                            <div class="col-6">
+                                <p><span style="font-weight: 600;">Avtivity: </span> {{ event.activity }} </p>
+                                <p><span style="font-weight: 600;">Host: </span> {{ event.host_name }} </p>
+                                <p><span style="font-weight: 600;">Phone: </span> {{ event.host_phone }} </p>
+                                <p><span style="font-weight: 600;">Email: </span> {{ event.host_contact }} </p>
+                                <br>
+                                <p><span style="font-weight: 600;">Expertise:</p>
+                                <p> {{ event.host_experience }} </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <hr>
+                <!-- Comments -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <h2> {{ current_user.name }} </h2>
+                    </div>
+                </div>
+
+                <div class="row border-bottom">
+                    {{ render_form(form, "/events/{0}/comment".format(event.id)) }}
+                </div>
+
+                {% for comment in event.comments %}
+                    <div class="row">
+                        <div class="col-6">
+                            <h6 style="margin-left: 2%;">{{ comment.user.name }}</h6>
+                            <h3 style="margin-left: 2%;">{{ comment.title }}</h3>
+                        </div>
+                        <div class="col-6">
+                            <h5 style="text-align: right; margin-right: 5%;">
+                                {{ comment.created_at.strftime('%d %B, %Y') }}  <!-- Format date -->
+                            </h5>
+                        </div>
+                    </div>
+                    <div class="col-11" style="margin-left: 2%;">
+                        <p>{{ comment.text }}</p>
+                    </div>
+                    <hr>
+                {% endfor %}
+            </div>
+
+            <!-- Buy Tickets -->
+            <div class="col-xl-2 col-md-3 col-2">
+                <div class="position-sticky" style="top: 70px;">
+                    <div class="container">
+                        <div class="card p-3" style="width: 200px;">
+                            <h4 class="card-title">Tickets for:</h4>
+                            <h6 style="font-weight: 600;" class="card-title">Beginner Painting Lessons</h6>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <label style="font-weight: 600;" for="ticketQuantity" class="form-label mb-0">Quantity:</label>
+                                <div class="d-flex align-items-center">
+                                    <input type="number" id="ticketQuantity" value="1" min="1" class="form-control text-center" style="width: 60px;">
+                                </div>
+                            </div>
+                            <p style="font-weight: 600;">Total Price: <span class="price">$100</span></p>
+                            <br>
+                            <a href="buyTickets.html">
+                            <a href="#">
+                                <input class="btn btn-warning w-100" type="submit" value="Place Order">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

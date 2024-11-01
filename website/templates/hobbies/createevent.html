@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% from "bootstrap5/form.html" import render_form %}
+
+{% block header %}{% endblock %}
+
+{% block content %}
+
+<main style="margin-top: 70px;">
+    <form method="post" action="{{ url_for('main.create')}}" enctype="multipart/form-data">
+    {{ form.hidden_tag() }}
+    <input type="hidden" name="event_id" value="{{ request.args.get('event_id') }}">
+    {% if request.args.get('event_id') %} <!-- If managing an event -->
+        <h1 style="text-align: center;">{{ form.name.data }}</h1>
+    {% else %}
+        <h1 style="text-align: center;">Create Event</h1>
+    {% endif %}
+
+    <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+        <div class="row">
+            <div class="col-md-2 col-12">
+                <div class="row">
+                    {{ form.image.label }} 
+                </div>
+                <div class="row">
+                    {{ form.image() }}
+                    {% if form.image.data %}
+                        <img src="{{ form.image.data }}" alt="event picture">
+                        {% endif %}
+                    {% if form.image.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.image.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-4 grid-item">
+                    <div class="group">
+                        {{ form.name.label }}
+                        {{ form.name() }}
+                    </div>
+                    <div class="group">
+                        {{ form.host_contact.label }}
+                        {{ form.host_contact() }}
+                    </div>
+                    <div class="group">
+                        {{ form.location.label }}
+                        {{ form.location() }}
+                        <br>
+                    </div>
+                    <div class="group">
+                        {{ form.activity.label }}
+                        {{ form.activity() }}
+                    </div>
+            </div>
+            <div class="col-5 grid-item">
+                <div class="group">
+                    {{ form.description.label }}
+                    {{ form.description }}
+                </div>
+                <br>
+                <details>
+                    <summary>Experience</summary>
+                    <ul style="list-style: none; columns: 2;">
+                        {% for choice in form.experience_required %}
+                            <div class="form-check">
+                                {{ choice() }}  <!-- Renders the checkbox input -->
+                                <label class="form-check-label">{{ choice.label.text }}</label>
+                            </div>
+                        {% endfor %}
+                    </ul>
+                </details>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <div class="group">
+                    {{ form.host_name.label }}
+                    {{ form.host_name() }}
+                </div>
+                <div class="group">
+                    {{ form.host_experience.label }}
+                    {{ form.host_experience() }}
+                </div>
+            </div>
+            <div class="col-md-4 col-12">
+                <div class="row">
+                    <div class="form-row">
+                        <div class="group" style="width: 30%;">
+                            {{ form.tickets_avaliable.label }}
+                            {{ form.tickets_avaliable() }}
+                        </div>
+                        <div class="group" style="width: 30%;">
+                            {{ form.tickets_price.label }}
+                            {{ form.tickets_price() }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-row">
+                        <div class="group" style="width: 40%;">
+                            {{ form.start_date.label }}
+                            {{ form.start_date(id="sDate") }}
+                            {% if form.start_date.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.start_date.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
+                        </div>
+                        <div class="group" style="width: 40%;">
+                            {{ form.end_date.label }}
+                            {{ form.end_date(id="eDate") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-row">
+                        <div class="group" style="width: 40%;">
+                            {{ form.start_time.label }}
+                            {{ form.start_time(id="sTime") }}
+                        </div>
+                        <div class="group" style="width: 40%;">
+                            {{ form.end_time.label }}
+                            {{ form.end_time(id="eTime") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-row">
+                        <div class="group" style="width: 60%;">
+                            {{ form.host_phone.label }}
+                            {{ form.host_phone() }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 col-12" style="margin-top: 2%; margin-left: 2%;">
+                <div>
+                    {% if request.args.get('event_id') %}
+                        <input class="btn btn-success w-75 p-3" type="submit" name="action" value="Update Event">
+                        <br>
+                        <small>By selecting <b>Update Event,</b> you are agreeing to Hobby Crunch's <a href="#">Terms
+                                and
+                                Conditions</a></small><br><br>
+                        <input class="btn btn-danger w-75 p-3" type="submit" name="action" value="Cancel Event">    
+                        <br>
+                        <small>By selecting <b>Cancel Event,</b> you are agreeing to Hobby Crunch's <a href="#">Terms
+                                and
+                                Conditions</a></small>
+                    {% else %}
+                        <input class="btn btn-success w-75 p-3" type="submit" name="action" value="Create Event">
+                        <br>
+                        <small>By selecting <b>Create Event,</b> you are agreeing to Hobby Crunch's <a href="#">Terms
+                                and
+                                Conditions</a></small>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+    </div>
+    </form>
+</main>
+
+{% endblock %}

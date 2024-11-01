@@ -1,55 +1,183 @@
 {% extends 'base.html' %}
 
 {% block header %}
-      <!--Jumbotron-->
-      <div class="container">
-         <div class="row justify-content-center mt-5 pb-4">
-            <div class="col-md-8">
-               <div class="card shadow p-5 mb-5 bg-light">
-                  <h1 class="text-center mb-3">Find our best travel deals</h1>
 
-                  <form class="form-inline d-flex flex-nowrap" action="{{ url_for('main.search') }}" >
-                     <input type="text" name="search" class="form-control flex-grow-1 my-1 mr-sm-2" id="SearchForm">
-                     <button type="submit" class="flex-shrink-1 btn btn-primary my-1">Submit</button>
-                   </form>
-                  
-               </div>
-            </div>
-         </div>
-      </div>
 {% endblock %}
 
 {% block content %}   
-      <div class="container">
-         <div class="row mt-5 mb-5 justify-content-center">
-            <div class="col-md-10">
-               <div class="media border p-3 d-flex justify-content-start">
-                  <img class="align-self-center me-3" style="max-width:120px"
-                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/600px-Earth_Western_Hemisphere_transparent_background.png"
-                     alt="Planet Earth">
-                  <div class="align-self-center media-body">
-                     <h5 class="mt-0">Find the best destinations on earth</h5>
-                     <p class="d-none d-sm-block">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                        scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                        turpis. Fusce condimentum nunc ac nisi vulputate fringilla.</p>
-                     <a href="#" class="btn btn-primary">Join Now</a>
-                  </div>
-               </div>
+    <main style="margin-top: 70px;">
+        <!--Carousel-->
+        <div id="carouselIndicators" class="carousel slide mx-auto"
+            style="max-width: 1000px; max-height: 500px; background-color: rgb(170, 170, 170);">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
             </div>
-         </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="eventDetails.html">
+                        <img src="static/image/paint.png" style="border: none;" class="d-block h-100 mx-auto" alt="Learn to Paint Event">
+                        <div class="carousel-caption d-none d-md-block"
+                            style="background-color: rgba(110, 110, 110, 0.7);">
+                            <h5>Learn to Paint</h5>
+                            <p>For Beginners, Intermediates and Advanced.</p>
+                            <p>Tickets for <span style="font-weight: 700; color: #3de12b;">$75</span> each.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a href="eventDetails.html">
+                        <img src="static/image/painting.jpg" style="border: none;" class="d-block h-100 mx-auto"
+                            alt="Beginners Painting Event">
+                        <div class="carousel-caption d-none d-md-block"
+                            style="background-color: rgba(110, 110, 110, 0.7);">
+                            <h5>Beginner Painting Lessons</h5>
+                            <p>For Beginners and Intermediates.</p>
+                            <p>Tickets for <span style="font-weight: 700; color: #3de12b;">$100</span> each.</p>
+                        </div>
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a href="eventDetails.html">
+                        <img src="static/image/woodworking.jpg" style="border: none;" class="d-block h-100 mx-auto"
+                            alt="Woodworking Event">
+                        <div class="carousel-caption d-none d-md-block"
+                            style="background-color: rgba(110, 110, 110, 0.7);">
+                            <h5>Hugh's Beginners Woodworking</h5>
+                            <p>For Beginners.</p>
+                            <p>Tickets for <span style="font-weight: 700; color: #3de12b;">$250</span> each.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
 
-         <div class="card-group">
-            {% for destination in destinations %}
-            <div class="card mx-3">
-               <img class="card-img-top"
-                  src="{{event.image}}" alt="event picture">
-               <div class="card-body">
-                  <h5 class="card-title">{{event.name}}</h5>
-                  <p class="card-text">{{event.description}}</p>
-               </div>
-               <div class="card-footer"><a href="{{url_for('event.show', id=event.id)}}" class ="btn btn-danger"> View Details </a></div>
+        <!--Container splitting filters and events-->
+        <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
+            <div class="row">
+
+                <!--Filters (Left)-->
+                <div class="col-lg-3 col-md-4 col-12 p-3">
+                    <h3>Filter by:</h3>
+                    <hr>
+                    <div style="margin-left: 10px;">
+                        <!-- Example: Event Status Filter -->
+                    <h4>Event Status</h4>
+                    <form action="{{ url_for('main.search') }}" method="get">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="inactive" value="Inactive" id="Inactive">
+                            <label class="form-check-label" for="Inactive">Inactive</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="sold_out" value="Sold Out" id="SoldOut">
+                            <label class="form-check-label" for="SoldOut">Sold Out</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="open" value="Open" id="Open">
+                            <label class="form-check-label" for="Open">Open</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="cancelled" value="Cancelled" id="Cancelled">
+                            <label class="form-check-label" for="Cancelled">Cancelled</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary mt-2">Apply Filters</button>
+                    
+                    </div>
+                    <hr>
+                    <div style="margin-left: 10px;">
+                        <h4>Proficiency</h4>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Beginner" checked>
+                            <label class="form-check-label" for="Beginner">Beginner</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Intermediate">
+                            <label class="form-check-label" for="Intermediate">Intermediate</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Advanced">
+                            <label class="form-check-label" for="Advanced">Advanced</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Expert">
+                            <label class="form-check-label" for="Expert">Expert</label>
+                        </div>
+                    </div>
+                    <hr>
+                    <div style="margin-left: 10px;">
+                        <h4>Activity</h4>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Arts & Craft" checked>
+                            <label class="form-check-label" for="Arts & Craft">Arts & Craft</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Sports & Fitness">
+                            <label class="form-check-label" for="Sports & Fitness">Sports & Fitness</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Music">
+                            <label class="form-check-label" for="Music">Music</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Board Games">
+                            <label class="form-check-label" for="Board Games">Board Games</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Electronic Games">
+                            <label class="form-check-label" for="Electronic Games">Electronic Games</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="Education">
+                            <label class="form-check-label" for="Education">Education</label>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+
+            <!-- Search Bar and Events Section (Right) -->
+            <div class="col-lg-9 col-md-8 col-12">
+
+                <!-- Search Bar -->
+                <div class="p-1 mb-3">
+                    <form class="form-inline d-flex flex-nowrap" action="{{url_for('main.search')}}" >
+                        <input type="text" name="search" class="form-control flex-grow-1 my-1 mr-sm-2" id="SearchForm">
+                        <button type="submit" class="flex-shrink-1 btn btn-primary my-1">Search/Refresh</button>
+                    </form>
+                </div>
+                </form>
+
+                <!-- Events View -->
+                <div class="row">
+                    {% for event in events %}
+                        <div class="col-lg-6 col-md-6 col-12 mb-4">
+                            <div class="card">
+                                <img class="card-img-top" src="{{ event.image }}" alt="event picture">
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ event.name }}</h5>
+                                    <p class="card-text">{{ event.description }}</p>
+                                </div>
+                                <div class="card-footer">
+                                    <a href="{{ url_for('event.show', id=event.id) }}" class="btn btn-danger">View Details</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
             </div>
-            {% endfor %}
-         </div>
-      </div>
+        </div>
 {% endblock %}
+
