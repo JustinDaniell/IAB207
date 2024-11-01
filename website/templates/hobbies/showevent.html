@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 
-{% from 'bootstrap5/form.html' import render_form %}
+{% from "bootstrap5/form.html" import render_form %}
+
+{% block header %}{% endblock %}
 
 {% block content %}
 
@@ -29,10 +31,11 @@
                                 <p><span style="font-weight: 600;">Located at: </span> {{ event.location }} </p>
                                 <p><span style="font-weight: 600;">Start Time: </span> {{ event.start_time }}, {{ event.start_date }} </p>
                                 <p><span style="font-weight: 600;">End Time: </span> {{ event.end_time }}, {{ event.end_date }}</p>
-                                <p style="font-weight: 600;">Price: <span class="price"> {{ event.tickets_price }} </p>
-                                <p><span style="font-weight: 600;">Number of Tickets: </span> Not finished </p>
+                                <p><span style="font-weight: 600;">Status: </span> {{ event.status }} </p>
+                                <p><span style="font-weight: 600;">Number of Tickets: </span> {{event.tickets}} </p>
                             </div>
                             <div class="col-6">
+                                <p><span style="font-weight: 600;">Avtivity: </span> {{ event.activity }} </p>
                                 <p><span style="font-weight: 600;">Host: </span> {{ event.host_name }} </p>
                                 <p><span style="font-weight: 600;">Phone: </span> {{ event.host_phone }} </p>
                                 <p><span style="font-weight: 600;">Email: </span> {{ event.host_contact }} </p>
@@ -72,7 +75,7 @@
                     </div>
                     <hr>
                 {% endfor %}
-                </div>
+            </div>
 
             <!-- Buy Tickets -->
             <div class="col-xl-2 col-md-3 col-2">

@@ -65,6 +65,7 @@ def search():
         return redirect(url_for('main.index'))
 
 @mainbp.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
   print('Method type: ', request.method)
   form = EventForm()

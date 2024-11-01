@@ -29,11 +29,17 @@ class Event(db.Model,UserMixin):
     description = db.Column(db.String(200), nullable=False)
     image = db.Column(db.String(400))
     location = db.Column(db.String(100), nullable=False)
+    start_date = db.Column(db.DateTime)
+    end_date = db.Column(db.DateTime)
+    start_time = db.Column(db.DateTime)
+    end_time = db.Column(db.DateTime)
     activity = db.Column(db.String(30), nullable=False)
     host_name = db.Column(db.String(100), nullable=False)
     host_experience = db.Column(db.String(200))
+    host_phone = db.Column(db.String(200))
     host_contact = db.Column(db.String(100), nullable=False)
     experience_required = db.Column(db.String(100), nullable=False)
+
 	# relations
     comments = db.relationship('Comment', backref='event', lazy='dynamic')
     tickets = db.relationship('Ticket', backref='event')
