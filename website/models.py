@@ -30,11 +30,17 @@ class Event(db.Model,UserMixin):
     description = db.Column(db.String(200), nullable=False)
     image = db.Column(db.String(400))
     location = db.Column(db.String(100), nullable=False)
+    start_date = db.Column(db.DateTime)
+    end_date = db.Column(db.DateTime)
+    start_time = db.Column(db.DateTime)
+    end_time = db.Column(db.DateTime)
     activity = db.Column(db.String(30), nullable=False)
     host_name = db.Column(db.String(100), nullable=False)
     host_experience = db.Column(db.String(200))
+    host_phone = db.Column(db.String(200))
     host_contact = db.Column(db.String(100), nullable=False)
     experience_required = db.Column(db.String(100), nullable=False)
+
 	# relations
     comments = db.relationship('Comment', backref='event', lazy='dynamic')
     tickets = db.relationship('Ticket', backref='event')
@@ -48,12 +54,13 @@ class Event(db.Model,UserMixin):
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200))
     text = db.Column(db.String(400))
     created_at = db.Column(db.DateTime, default=datetime.now())
     # add the foreign keys
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))  
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
-    
+
     # string print method
     def __repr__(self):
         return f"Comment: {self.text}"

@@ -92,5 +92,6 @@ class RegisterForm(FlaskForm):
 
 # User comment
 class CommentForm(FlaskForm):
-  text = TextAreaField('Comment', [InputRequired()])
-  submit = SubmitField('Create')
+  title = StringField('Title',  validators=[InputRequired()])
+  text = TextAreaField('Comment', validators=[InputRequired()])
+  submit = SubmitField('Post')
