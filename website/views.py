@@ -158,7 +158,7 @@ def create():
 
         # create tickets for the event
         db.session.query(Ticket).filter_by(event_id=event_id, user_id = None).delete() # delete all un-bought tickets
-
+        print(form.start_time.data)
         for _ in range(form.tickets_avaliable.data):
           ticket = Ticket(price=form.tickets_price.data, start_date=form.start_date.data,
           end_date=form.end_date.data, start_time=form.start_time.data, end_time=form.end_time.data, event_id=event.id)
@@ -280,32 +280,6 @@ def ticket():
 @mainbp.route('/my_events', methods=['GET', 'POST'])
 @login_required
 def my_events():
-  tickets = db.session.scalars(db.select(Ticket).where(Ticket.user_id == current_user.id)).all()
-  # get the event details for each ticket
-  ticket_by_event = {}
-  for ticket in tickets:
-    # remove all tickets which share the same event id
-    if ticket.event_id in ticket_by_event:
-      ticket_by_event[ticket.event_id]['count'] += 1
-      ticket_by_event[ticket.event_id]['total_price'] += ticket.price
-    else:
-      ticket_by_event[ticket.event_id] = {
-        'count': 1,
-        'total_price': ticket.price,
-        'start_time' : ticket.start_time,
-        'end_time' : ticket.end_time,
-        'start_date' : ticket.start_date,
-        'end_date' : ticket.end_date,
-        'order_id' : ticket.order_id,
-        'order_date' : ticket.order.order_date
-      }
-  print(ticket_by_event)
-  events = {}
-  for event_id in ticket_by_event.keys():
-        event = db.session.scalar(db.select(Event).where(Event.id == event_id))
-        if event:
-            events[event_id] = event  # Store the event by its ID
-  
-  print(events)
-  return render_template('manageTickets.html', tickets=ticket_by_event, events=events)
+  events = db.session.scalars(db.select(Event).where(Event.host_id == current_user.id)).all()
+  return render_template('myEvents.html', events=events)
 

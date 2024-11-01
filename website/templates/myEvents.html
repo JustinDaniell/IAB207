@@ -9,37 +9,46 @@
 <main style="margin-top: 70px;">
 
     <h1 style="text-align: center;">My Events</h1>
-    <a href="createManage.html" class="btn btn-success ms-2">+ Create Event</a>
+    <a href="/create" class="btn btn-success ms-2">+ Create Event</a>
     <br>
     <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
         <div class="row">
             <!-- Events View -->
-            <div class="px-1">
-                <div class="card p-2">
-                    <a href="eventDetails.html">
-                        <div class="row">
-                            <img src="static/img/painting.jpg" class="d-block col-xl-4 col-lg-5 img-home" alt="Beginners Painting Event">
-                            <div class="col-xl-5 col-lg-3" style="margin-left: 10px;">
-                                <h2>Beginner Painting Lessons</h2>
-                                <div style="margin-left: 15px;">
-                                    <h4 style="margin-bottom: 0px;">Arts & Craft</h4>
-                                    <p style="font-weight: 600;">Beginners and Intermediates</p>
-                                    <p><span style="font-weight: 600;">At: </span>123 Art Rd</p>
-                                    <p><span style="font-weight: 600;">Start Time: </span>9:00am, 16
-                                        September</p>
-                                    <p><span style="font-weight: 600;">End Time: </span>12:00pm, 16
-                                        September</p>
-                                    <p style="font-weight: 600;">Price: <span class="price">$100</span>
-                                    </p>
+            {% if events %}
+            {% for event in events %}
+            <div class="row">
+                <!-- Events View -->
+                <div class="px-1">
+                    <div class="card p-2">
+                        <a href="{{ url_for('event.show', id=event.id) }}">
+                            <div class="row">
+                                <img src="{{ event.image }}" class="d-block col-xl-4 col-lg-5 img-home" alt="Beginners Painting Event">
+                                <div class="col-xl-5 col-lg-3" style="margin-left: 10px;">
+                                    <h2>{{ event.name }}</h2>
+                                    <div style="margin-left: 15px;">
+                                        <h4 style="margin-bottom: 0px;">{{ event.activity }}</h4>
+                                        <p style="font-weight: 600;">{{ event.experience_required }}</p>
+                                        <p><span style="font-weight: 600;">At: </span>123 Art Rd</p>
+                                        <p><span style="font-weight: 600;">Start Time: </span>{{ event.tickets[0].start_time.strftime('%H:%M') }}, {{ event.tickets[0].start_date.strftime('%B %d, %Y') }}</p>
+                                        <p><span style="font-weight: 600;">End Time: </span>{{ event.tickets[0].end_time.strftime('%H:%M') }}, {{ event.tickets[0].end_date.strftime('%B %d, %Y') }}</p>
+                                        <p style="font-weight: 600;">Price: <span class="price">${{ event.tickets[0].price }}</span>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <a href="createManage.html" class="btn btn-success mx-auto" style="width: 98%;">Manage Event</a>
-                        </div>
-                    </a>
+                            <div class="row">
+                                <a href="createManage.html" class="btn btn-success mx-auto" style="width: 98%;">Manage Event</a>
+                            </div>
+                        </a>
+                    </div>
                 </div>
-            </div>
+            </div><br>
+            {% endfor %}
+            {% else %}
+            <div class="alert alert-info" role="alert">
+                <h4 class="alert-heading">No Events found!</h4>
+                <p>Looks like you haven't created any events yet. Press <a href="/create">Create Event</a> to create an event.</p>
+            {% endif %}
         </div>
     </div>
 </main>
