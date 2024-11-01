@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 
-{% block header %}
+{% from "bootstrap5/form.html" import render_form %}
 
-{% endblock %}
+{% block header %}{% endblock %}
 
 {% block content %}   
     
@@ -47,7 +47,7 @@
         <!--Container splitting filters and events-->
         <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
             <div class="row">
-
+    
                 <!--Filters (Left)-->
                 <div class="col-lg-3 col-md-4 col-12 p-3">
                     <h3>Filter by:</h3>
@@ -101,18 +101,35 @@
                         <div class="col-lg-6 col-md-6 col-12 mb-4">
                             <div class="card">
                                 <img class="card-img-top" src="{{ event.image }}" alt="event picture">
-                                <div class="card-body">
-                                    <h5 class="card-title">{{ event.name }}</h5>
-                                    <p class="card-text">{{ event.description }}</p>
+                                <div class="row">
+                                    <div class="card-body col-md-2">
+                                        <h5 class="card-title">{{ event.name }}</h5>
+                                        <p class="card-text">{{ event.description }}</p>
+                                    </div>
+                                    <div class="card-body col-md-2">
+                                        <h5 class="card-title">Status: {{ event.status[0].status }}</h5>
+                                        {% if event.tickets %}
+                                            <p class="card-text">Price: ${{ event.tickets[0].price }} per ticket</p>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <div class="card-footer">
-                                    <a href="{{ url_for('event.show', id=event.id) }}" class="btn btn-danger">View Details</a>
-                                </div>
+                                {% if event.status[0].status == open %}
+                                    <div class="card-footer">
+                                        <a href="{{ url_for('event.show', id=event.id) }}" class="btn btn-danger">View
+                                            Details</a>
+                                    </div>
+                                {% else %}
+                                    <div class="card-footer">
+                                        <h5 class="card-title">This Event cannot be viewed</h5>
+                                    </div>
+                                {% endif %} 
                             </div>
                         </div>
-                    {% endfor %}
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
+    </main>
 {% endblock %}
 

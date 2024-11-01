@@ -87,7 +87,7 @@ def create():
     form.host_experience.data = show_event.host_experience
     form.host_contact.data = show_event.host_contact
     form.image.data = show_event.image
-    form.tickets_avaliable.data = show_status.avaliable_tickets
+    form.tickets_available.data = show_status.available_tickets
     form.host_phone.data = show_event.host_contact
     if show_event and show_event.experience_required: # prefill the experience levels in form
       form.experience_required.data = show_event.experience_required.split(', ')
@@ -102,25 +102,19 @@ def create():
      else:
         event_id = int(event_id)
      if 'action' in request.form:
-        print('action')
         temp_status = 'Open'
         if request.form['action'] == 'Cancel Event': # if cancelling event, remove all tickets and cancel status
-          print('if')
-          print('Cancelling event')
-          form.tickets_avaliable.data = 0
+          form.tickets_available.data = 0
           temp_status = 'cancelled'
           flash('Successfully cancelled event', 'success')
         elif form.validate_on_submit():
           try:
             form.validate_dates()
           except ValidationError as e:
-            print(e)  # Print the error message for debugging
-            form.start_date.errors.append(str(e))  # Add error to form if needed
+            flash(e, 'danger')
             print(form.errors)
             return render_template('hobbies/createevent.html', form=form)
           else:
-            print('elif')
-            print('Form validated')
             # get the selected experience levels and convert to string
             experience_str = ', '.join(form.experience_required.data)
             # call the function that checks and returns image
@@ -157,8 +151,7 @@ def create():
 
         # create tickets for the event
         db.session.query(Ticket).filter_by(event_id=event_id, user_id = None).delete() # delete all un-bought tickets
-        print(form.start_time.data)
-        for _ in range(form.tickets_avaliable.data):
+        for _ in range(form.tickets_available.data):
           ticket = Ticket(price=form.tickets_price.data, start_date=form.start_date.data,
           end_date=form.end_date.data, start_time=form.start_time.data, end_time=form.end_time.data, event_id=event.id)
           db.session.add(ticket)
@@ -170,14 +163,14 @@ def create():
             current_status = 'Inactive'
         elif form.start_time.data < datetime.now().time() and form.start_date.data == datetime.now().date():
             current_status = 'Inactive'
-        elif form.tickets_avaliable.data == 0:
+        elif form.tickets_available.data == 0:
             current_status = 'Sold Out'
         else:
           current_status = 'Open'
 
         status_data = {
           "status": current_status,
-          "avaliable_tickets": form.tickets_avaliable.data,
+          "available_tickets": form.tickets_available.data,
         }
 
         if event_id:
@@ -193,7 +186,7 @@ def create():
         event_status = Status(
           id=status_data.get("id"),  # This will be None if not updating an existing status
           status=status_data["status"],
-          avaliable_tickets=status_data["avaliable_tickets"],
+          available_tickets=status_data["available_tickets"],
           event_id=status_data["event_id"]
         )
         db.session.merge(event_status)
@@ -209,8 +202,7 @@ def create():
 def buy():
   event_id = request.args.get('event_id')
   event = db.session.scalar(db.select(Event).where(Event.id == event_id))
-  print('Method type: ', request.method)
-  print('user id: ', current_user.id)
+
   available_tickets = db.session.query(Ticket).filter(
     Ticket.event_id == event_id,
     Ticket.user_id.is_(None)).all()
@@ -220,7 +212,11 @@ def buy():
       new_order = Order(order_date=datetime.now(), user_id=current_user.id)
       db.session.add(new_order)
       db.session.flush()
-
+      if form.num_tickets.data == len(available_tickets):
+        status = db.session.scalar(db.select(Status).where(Status.event_id == event_id))
+        status.status = 'Sold Out'
+        status.available_tickets = 0
+        db.session.commit()
       for ticket in available_tickets[:form.num_tickets.data]:
         ticket.user_id = current_user.id
         ticket.order_id = new_order.id
@@ -229,13 +225,13 @@ def buy():
       flash('Tickets bought successfully', 'success')
       event_status = db.session.query(Status).filter(
         Status.event_id == event_id).one()
-      event_status.avaliable_tickets -= form.num_tickets.data
-      if event_status.avaliable_tickets == 0:
+      event_status.available_tickets -= form.num_tickets.data
+      if event_status.available_tickets == 0:
         event_status.status = 'Sold Out'
       db.session.commit()
     else:
       print(form.errors)
-      flash('Not enough tickets available', 'error')
+      flash('Not enough tickets available', 'danger')
       return render_template('buyTickets.html', form=form, tickets=available_tickets[0], event=event, num_tickets=len(available_tickets), user=current_user)
     
     #### temporarily redirect to index - redir to tickets page later

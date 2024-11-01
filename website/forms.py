@@ -48,7 +48,7 @@ class EventForm(FlaskForm):
         choices=[('Beginner', 'Beginner'), ('Intermediate', 'Intermediate'), ('Advanced', 'Advanced'), ('Expert', 'Expert')],
         option_widget=CheckboxInput()
     )
-  tickets_avaliable = IntegerField('Tickets Avaliable:', validators=[InputRequired()])
+  tickets_available = IntegerField('Tickets Available:', validators=[InputRequired()])
   tickets_price = FloatField('Tickets Price:', validators=[InputRequired()])
   start_date = DateField('Start Date', format='%Y-%m-%d', validators=[InputRequired()])
   end_date = DateField('End Date', format='%Y-%m-%d', validators=[InputRequired()])

@@ -32,7 +32,7 @@
                                 <p><span style="font-weight: 600;">Start Time: </span> {{ ticket.start_time.strftime('%H:%M') }}, {{ ticket.start_date.strftime('%B %d, %Y') }} </p>
                                 <p><span style="font-weight: 600;">End Time: </span> {{ ticket.end_time.strftime('%H:%M') }}, {{ ticket.end_date.strftime('%B %d, %Y') }}</p>
                                 <p><span style="font-weight: 600;">Status: </span> {{ status.status }} </p>
-                                <p><span style="font-weight: 600;">Number of Tickets: </span> {{status.avaliable_tickets}} </p>
+                                <p><span style="font-weight: 600;">Number of Tickets: </span> {{status.available_tickets}} </p>
                             </div>
                             <div class="col-6">
                                 <p><span style="font-weight: 600;">Avtivity: </span> {{ event.activity }} </p>
@@ -83,17 +83,12 @@
                     <div class="container">
                         <div class="card p-3" style="width: 200px;">
                             <h4 class="card-title">Tickets for:</h4>
-                            <h6 style="font-weight: 600;" class="card-title">Beginner Painting Lessons</h6>
+                            <h6 style="font-weight: 600;" class="card-title">{{ event.name }}</h6>
                             <div class="d-flex justify-content-between align-items-center mb-3">
-                                <label style="font-weight: 600;" for="ticketQuantity" class="form-label mb-0">Quantity:</label>
-                                <div class="d-flex align-items-center">
-                                    <input type="number" id="ticketQuantity" value="1" min="1" class="form-control text-center" style="width: 60px;">
-                                </div>
                             </div>
-                            <p style="font-weight: 600;">Total Price: <span class="price">$100</span></p>
+                            <p style="font-weight: 600;">Price: <span class="price">$ {{ ticket.price }}</span></p>
                             <br>
-                            <a href="buyTickets.html">
-                            <a href="#">
+                            <a href="{{ url_for('main.buy', event_id=event.id) }}">
                                 <input class="btn btn-warning w-100" type="submit" value="Place Order">
                             </a>
                         </div>

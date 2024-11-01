@@ -205,3 +205,26 @@ textarea[type=comment] {
     border-bottom: 1px solid rgb(200, 200, 200);
     resize: none;
 }
+
+.alert {
+    display: flex; /* Ensure flex layout */
+    justify-content: space-between; /* Space between message and button */
+    align-items: center; /* Center align vertically */
+    margin-bottom: 20px; /* Space below alert */
+}
+
+.alert .close {
+    margin-left: auto; /* Ensure the close button is pushed to the far right */
+}
+
+.alert-success {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+.alert-danger {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+

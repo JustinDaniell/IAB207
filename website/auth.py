@@ -13,7 +13,7 @@ authbp = Blueprint('auth', __name__ )
 def register():
     register = RegisterForm()
     #the validation of form is fine, HTTP request is POST
-    if (register.validate_on_submit()==True):
+    if register.validate_on_submit():
             #get username, password and email from the form
             uname = register.user_name.data
             fname = register.first_name.data
@@ -22,11 +22,17 @@ def register():
             email = register.email_id.data
             number = register.contact_number.data
             address = register.street_address.data
-            #check if a user exists
+            #check if a similar user or phone number exists
             user = db.session.scalar(db.select(User).where(User.name==uname))
+            phone = db.session.scalar(db.select(User).where(User.number==number))
+
             if user:#this returns true when user is not None
-                flash('Username already exists, please try another')
+                flash('Username already exists, please try another', 'danger')
                 return redirect(url_for('auth.register'))
+            if phone:#this returns true when phone is not None
+                flash('phone number already exists, please double check your number', 'danger')
+                return redirect(url_for('auth.register'))
+            
             # don't store the password in plaintext!
             pwd_hash = generate_password_hash(pwd)
             #create a new User model object
@@ -38,6 +44,7 @@ def register():
             return redirect(url_for('main.index'))
     #the else is called when the HTTP request calling this page is a GET
     else:
+        print(register.errors)
         return render_template('user.html', form=register, heading='Register')
 
 @authbp.route('/login', methods=['GET', 'POST'])
