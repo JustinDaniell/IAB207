@@ -38,12 +38,13 @@ def index():
     # Apply filters to the query if provided
     if activity_filters:
         events_query = events_query.filter(Event.activity.in_(activity_filters))
-    
+
     if status_filters:
         events_query = events_query.join(Status).filter(Status.status.in_(status_filters))
-    
+
     if proficiency_filters:
-        events_query = events_query.join(Event.experience_required).filter(Event.experience_required.in_(proficiency_filters))
+        events_query = events_query.filter(Event.experience_required.in_(proficiency_filters))
+
 
     # Check for search query
     search_query = request.args.get('search')
