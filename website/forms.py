@@ -84,4 +84,4 @@ class RegisterForm(FlaskForm):
 # User comment
 class CommentForm(FlaskForm):
   text = TextAreaField('Comment', [InputRequired()])
-  submit = SubmitField('Create')
+  submit = SubmitField('Post')

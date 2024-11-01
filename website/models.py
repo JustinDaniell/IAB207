@@ -46,10 +46,11 @@ class Event(db.Model,UserMixin):
 class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(100))
     text = db.Column(db.String(400))
     created_at = db.Column(db.DateTime, default=datetime.now())
     # add the foreign keys
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))  
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
     
     # string print method

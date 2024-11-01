@@ -1,9 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Event, Comment
 from .forms import CommentForm, EventForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
+from flask_login import login_required, current_user
 
 eventbp = Blueprint('event', __name__, url_prefix='/events')
 
@@ -29,14 +30,15 @@ def check_upload_file(form):
   return db_upload_path
 
 
-@eventbp.route('/<id>/comment', methods=['GET', 'POST'])  
+@eventbp.route('/<id>/comment', methods=['GET', 'POST'])
+@login_required  
 def comment(id):  
     form = CommentForm()  
     # get the event object associated to the page and the comment
     event = db.session.scalar(db.select(Event).where(Event.id==id))  
     if form.validate_on_submit():  
       # read the comment from the form
-      comment = Comment(text=form.text.data, event=event) 
+      comment = Comment(text=form.text.data, event=event, user=current_user) 
       # here the back-referencing works - comment.event is set
       # and the link is created
       db.session.add(comment) 
@@ -44,6 +46,6 @@ def comment(id):
 
       # flashing a message which needs to be handled by the html
       # flash('Your comment has been added', 'success')  
-      print('Your comment has been added', 'success') 
+      flash('Your comment has been added', 'success') 
     # using redirect sends a GET request to event.show
     return redirect(url_for('event.show', id=id))
