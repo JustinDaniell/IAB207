@@ -32,12 +32,12 @@ class EventForm(FlaskForm):
     FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
   location = StringField('Location:', validators=[InputRequired()])
   activity = SelectField('Activity:', choices=[
-            ('Arts', 'Arts & Craft'),
-            ('Sports', 'Sports & Fitness'),
-            ('Music', 'Music'),
-            ('bGames', 'Board Games'),
-            ('eGames', 'Electronic Games'),
-            ('Education', 'Education')], validators=[InputRequired()])
+            ('Arts & Craft'),
+            ('Sports & Fitness'),
+            ('Music'),
+            ('Board Games'),
+            ('Electronic Games'),
+            ('Education')], validators=[InputRequired()])
   host_name = StringField('Host Name:', validators=[InputRequired()])
   host_experience = TextAreaField('Host Experience:', render_kw={"style": "resize: none; height: 200px;"}, 
             validators=[InputRequired()])
