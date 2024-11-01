@@ -83,7 +83,7 @@ class Status(db.Model):
     
     id = db.Column(db.Integer, primary_key=True)
     status = db.Column(db.String(10), index=True, nullable=False)
-    avaliable_tickets = db.Column(db.Integer, nullable=False)
+    available_tickets = db.Column(db.Integer, nullable=False)
     # relation
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), unique=True, nullable=False)
 
