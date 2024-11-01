@@ -27,43 +27,38 @@ def check_upload_file(form):
 
 @mainbp.route('/')
 def index():
-    events = db.session.scalars(db.select(Event)).all()
-    return render_template('index.html', events=events )
+    # Start with all events
+    events_query = db.session.query(Event)
 
-@mainbp.route('/search')
-def search():
-    # Initialize active filters dictionary
-    active_filters = {}
+    # Get filter parameters from the request
+    activity_filters = request.args.getlist('activity')
+    status_filters = request.args.getlist('status')
+    proficiency_filters = request.args.getlist('proficiency')
 
-    # Check if the search query is provided
-    if 'search' in request.args and request.args['search']:
-        search_query = request.args['search']
-        print(search_query)
+    # Apply filters to the query if provided
+    if activity_filters:
+        events_query = events_query.filter(Event.activity.in_(activity_filters))
+    
+    if status_filters:
+        events_query = events_query.join(Status).filter(Status.status.in_(status_filters))
+    
+    if proficiency_filters:
+        events_query = events_query.join(Event.experience_required).filter(Event.experience_required.in_(proficiency_filters))
+
+    # Check for search query
+    search_query = request.args.get('search')
+    if search_query and search_query != "":
         query = "%" + search_query + "%"
+        events_query = events_query.filter(
+            (Event.description.like(query)) |
+            (Event.name.like(query))
+        )
 
-        # Collect active filters from the request args
-        if 'inactive' in request.args:
-            active_filters['Inactive'] = 'Yes'
-        if 'sold_out' in request.args:
-            active_filters['Sold Out'] = 'Yes'
-        if 'open' in request.args:
-            active_filters['Open'] = 'Yes'
-        if 'cancelled' in request.args:
-            active_filters['Cancelled'] = 'Yes'
+    # Execute the query and get the results
+    events = events_query.all()
+    
+    return render_template('index.html', events=events)
 
-        # Fetch events based on search query and filters
-        events = db.session.scalars(
-            db.select(Event).where(
-                (Event.description.like(query)) |
-                (Event.name.like(query))
-            )
-        ).all()
-
-        # Pass events and active_filters to the template
-        return render_template('index.html', events=events, active_filters=active_filters)
-
-    else:
-        return redirect(url_for('main.index'))
 
 @mainbp.route('/create', methods=['GET', 'POST'])
 @login_required

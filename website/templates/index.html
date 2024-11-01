@@ -75,75 +75,32 @@
                     <h3>Filter by:</h3>
                     <hr>
                     <div style="margin-left: 10px;">
-                        <!-- Example: Event Status Filter -->
-                    <h4>Event Status</h4>
-                    <form action="{{ url_for('main.search') }}" method="get">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="inactive" value="Inactive" id="Inactive">
-                            <label class="form-check-label" for="Inactive">Inactive</label>
+                    <!-- Event Filter -->
+                    <form action="{{ url_for('main.index') }}" method="get">
+                        <div>
+                            <label>Activity:</label><br>
+                            <input type="checkbox" name="activity" value="Arts & Craft"> Arts & Craft<br>
+                            <input type="checkbox" name="activity" value="Sports & Fitness"> Sports & Fitness<br>
+                            <input type="checkbox" name="activity" value="Music"> Music<br>
+                            <input type="checkbox" name="activity" value="Board Games"> Board Games<br>
+                            <input type="checkbox" name="activity" value="Electronic Games"> Electronic Games<br>
+                            <input type="checkbox" name="activity" value="Education"> Education<br>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="sold_out" value="Sold Out" id="SoldOut">
-                            <label class="form-check-label" for="SoldOut">Sold Out</label>
+                        <div>
+                            <label>Status:</label><br>
+                            <input type="checkbox" name="status" value="Inactive"> Inactive<br>
+                            <input type="checkbox" name="status" value="Sold Out"> Sold Out<br>
+                            <input type="checkbox" name="status" value="Open"> Open<br>
+                            <input type="checkbox" name="status" value="Cancelled"> Cancelled<br>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="open" value="Open" id="Open">
-                            <label class="form-check-label" for="Open">Open</label>
+                        <div>
+                            <label>Proficiency:</label><br>
+                            <input type="checkbox" name="proficiency" value="Beginner"> Beginner<br>
+                            <input type="checkbox" name="proficiency" value="Intermediate"> Intermediate<br>
+                            <input type="checkbox" name="proficiency" value="Advanced"> Advanced<br>
+                            <input type="checkbox" name="proficiency" value="Expert"> Expert<br>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" name="cancelled" value="Cancelled" id="Cancelled">
-                            <label class="form-check-label" for="Cancelled">Cancelled</label>
-                        </div>
-                        <button type="submit" class="btn btn-primary mt-2">Apply Filters</button>
-                    
-                    </div>
-                    <hr>
-                    <div style="margin-left: 10px;">
-                        <h4>Proficiency</h4>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="Beginner" checked>
-                            <label class="form-check-label" for="Beginner">Beginner</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="Intermediate">
-                            <label class="form-check-label" for="Intermediate">Intermediate</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="Advanced">
-                            <label class="form-check-label" for="Advanced">Advanced</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="Expert">
-                            <label class="form-check-label" for="Expert">Expert</label>
-                        </div>
-                    </div>
-                    <hr>
-                    <div style="margin-left: 10px;">
-                        <h4>Activity</h4>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="Arts & Craft" checked>
-                            <label class="form-check-label" for="Arts & Craft">Arts & Craft</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="Sports & Fitness">
-                            <label class="form-check-label" for="Sports & Fitness">Sports & Fitness</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="Music">
-                            <label class="form-check-label" for="Music">Music</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="Board Games">
-                            <label class="form-check-label" for="Board Games">Board Games</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="Electronic Games">
-                            <label class="form-check-label" for="Electronic Games">Electronic Games</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" id="Education">
-                            <label class="form-check-label" for="Education">Education</label>
-                        </div>
+                        <button type="submit">Filter</button>
                     </div>
                     <hr>
                 </div>
@@ -153,10 +110,10 @@
 
                 <!-- Search Bar -->
                 <div class="p-1 mb-3">
-                    <form class="form-inline d-flex flex-nowrap" action="{{url_for('main.search')}}" >
-                        <input type="text" name="search" class="form-control flex-grow-1 my-1 mr-sm-2" id="SearchForm">
-                        <button type="submit" class="flex-shrink-1 btn btn-primary my-1">Search/Refresh</button>
-                    </form>
+                    <form action="{{ url_for('main.index') }}" method="get">
+                        <input type="text" name="search" placeholder="Search events...">
+                        <button type="submit">Search</button>
+                    </form>                    
                 </div>
                 </form>
 
