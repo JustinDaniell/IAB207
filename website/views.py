@@ -158,7 +158,6 @@ def create():
 
         # create tickets for the event
         db.session.query(Ticket).filter_by(event_id=event_id, user_id = None).delete() # delete all un-bought tickets
-        print(form.start_time.data)
         for _ in range(form.tickets_avaliable.data):
           ticket = Ticket(price=form.tickets_price.data, start_date=form.start_date.data,
           end_date=form.end_date.data, start_time=form.start_time.data, end_time=form.end_time.data, event_id=event.id)

@@ -6,8 +6,8 @@ class User(db.Model,UserMixin):
     __tablename__ = 'users' # good practice to specify table name
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), index=True, unique=True, nullable=False)
-    fname = db.Column(db.String(100), index=True, unique=True, nullable=False)
-    lname = db.Column(db.String(100), index=True, unique=True, nullable=False)
+    fname = db.Column(db.String(100), index=True, nullable=False)
+    lname = db.Column(db.String(100), index=True, nullable=False)
     emailid = db.Column(db.String(100), index=True, nullable=False)
     number = db.Column(db.Integer, index=True, unique=True, nullable=False)
     address = db.Column(db.String(100), index=True, nullable=False)
