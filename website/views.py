@@ -253,6 +253,7 @@ def ticket():
       ticket_by_event[ticket.event_id]['count'] += 1
       ticket_by_event[ticket.event_id]['total_price'] += ticket.price
     else:
+      status = db.session.scalar(db.select(Status).where(Status.event_id == ticket.event_id))
       ticket_by_event[ticket.event_id] = {
         'count': 1,
         'total_price': ticket.price,
@@ -261,7 +262,8 @@ def ticket():
         'start_date' : ticket.start_date,
         'end_date' : ticket.end_date,
         'order_id' : ticket.order_id,
-        'order_date' : ticket.order.order_date
+        'order_date' : ticket.order.order_date,
+        'status' : status.status
       }
   print(ticket_by_event)
   events = {}
