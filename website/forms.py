@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, IntegerField, SelectField, SelectMultipleField, FormField, DateField, TimeField
-from wtforms.validators import InputRequired, Email, EqualTo
+from wtforms.fields import TextAreaField, FloatField, SubmitField, StringField, PasswordField, IntegerField, SelectField, SelectMultipleField, FormField, DateField, TimeField
+from wtforms.validators import InputRequired, Email, EqualTo, ValidationError
 from flask_wtf.file import FileRequired, FileField, FileAllowed
 from wtforms.widgets import CheckboxInput
 
@@ -38,23 +38,32 @@ class EventForm(FlaskForm):
             ('bGames', 'Board Games'),
             ('eGames', 'Electronic Games'),
             ('Education', 'Education')], validators=[InputRequired()])
-  status = SelectField('Activity:', choices=[
-            ('Open'),
-            ('Inactive'),
-            ('Sold Out'),
-            ('Cancelled')], validators=[InputRequired()])
   host_name = StringField('Host Name:', validators=[InputRequired()])
+  host_id = IntegerField('Host ID', validators=[InputRequired()])
   host_experience = TextAreaField('Host Experience:', render_kw={"style": "resize: none; height: 200px;"}, 
             validators=[InputRequired()])
   host_contact = IntegerField('Host Contact:', validators=[InputRequired()])
   host_phone = StringField('Host Phone:', validators=[InputRequired()])
-  experience_required = FormField(ExperienceForm)  # Embed the experience form
+  experience_required = SelectMultipleField(
+        'Experience Required', 
+        choices=[('Beginner', 'Beginner'), ('Intermediate', 'Intermediate'), ('Advanced', 'Advanced'), ('Expert', 'Expert')],
+        option_widget=CheckboxInput()
+    )
   tickets_avaliable = IntegerField('Tickets Avaliable:', validators=[InputRequired()])
-  tickets_price = IntegerField('Tickets Price:', validators=[InputRequired()])
-  start_date = DateField('Start Date', format='%Y-%m-%d')
-  end_date = DateField('End Date', format='%Y-%m-%d')
-  start_time = TimeField('Start Time', format='%H:%M')
-  end_time = TimeField('End Time', format='%H:%M')
+  tickets_price = FloatField('Tickets Price:', validators=[InputRequired()])
+  start_date = DateField('Start Date', format='%Y-%m-%d', validators=[InputRequired()])
+  end_date = DateField('End Date', format='%Y-%m-%d', validators=[InputRequired()])
+  start_time = TimeField('Start Time', format='%H:%M', validators=[InputRequired()])
+  end_time = TimeField('End Time', format='%H:%M', validators=[InputRequired()])
+
+  def validate_dates(self):
+        if self.start_date.data > self.end_date.data:
+            raise ValidationError("Start date must be before end date.")
+        elif self.start_date.data == self.end_date.data:
+            if self.start_time.data >= self.end_time.data:
+                raise ValidationError("Start time must be before end time on the same day.")
+
+
   submit = SubmitField("Create")
 
 # User login

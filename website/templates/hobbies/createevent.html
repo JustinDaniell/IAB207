@@ -9,7 +9,12 @@
 <main style="margin-top: 70px;">
     <form method="post" action="{{ url_for('main.create')}}" enctype="multipart/form-data">
     {{ form.hidden_tag() }}
-    <h1 style="text-align: center;">My Event</h1>
+    <input type="hidden" name="event_id" value="{{ request.args.get('event_id') }}">
+    {% if request.args.get('event_id') %} <!-- If managing an event -->
+        <h1 style="text-align: center;">{{ form.name.data }}</h1>
+    {% else %}
+        <h1 style="text-align: center;">Create Event</h1>
+    {% endif %}
 
     <div class="container-fluid" style="margin-top: 10px; margin-bottom: 10px;">
         <div class="row">
@@ -18,14 +23,17 @@
                     {{ form.image.label }} 
                 </div>
                 <div class="row">
-                    {{ form.image() }} 
+                    {{ form.image() }}
+                    {% if form.image.data %}
+                        <img src="{{ form.image.data }}" alt="event picture">
+                        {% endif %}
                     {% if form.image.errors %}
-                <div class="alert alert-danger">
-                    {% for error in form.image.errors %}
-                        <p>{{ error }}</p>
-                    {% endfor %}
-                </div>
-            {% endif %}
+                        <div class="alert alert-danger">
+                            {% for error in form.image.errors %}
+                                <p>{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </div>
             <div class="col-4 grid-item">
@@ -46,10 +54,6 @@
                         {{ form.activity.label }}
                         {{ form.activity() }}
                     </div>
-                    <div class="group">
-                        {{ form.status.label }}
-                        {{ form.status() }}
-                    </div>
             </div>
             <div class="col-5 grid-item">
                 <div class="group">
@@ -60,10 +64,11 @@
                 <details>
                     <summary>Experience</summary>
                     <ul style="list-style: none; columns: 2;">
-                        {% for subfield in form.experience_required.checkboxes %}
-                            <li>
-                                <label>{{ subfield() }} {{ subfield.label }}</label>  <!-- Render each checkbox -->
-                            </li>
+                        {% for choice in form.experience_required %}
+                            <div class="form-check">
+                                {{ choice() }}  <!-- Renders the checkbox input -->
+                                <label class="form-check-label">{{ choice.label.text }}</label>
+                            </div>
                         {% endfor %}
                     </ul>
                 </details>
@@ -98,6 +103,13 @@
                         <div class="group" style="width: 40%;">
                             {{ form.start_date.label }}
                             {{ form.start_date(id="sDate") }}
+                            {% if form.start_date.errors %}
+                                <div class="alert alert-danger">
+                                    {% for error in form.start_date.errors %}
+                                        <p>{{ error }}</p>
+                                    {% endfor %}
+                                </div>
+                            {% endif %}
                         </div>
                         <div class="group" style="width: 40%;">
                             {{ form.end_date.label }}
@@ -126,13 +138,27 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-2 col-12" style="margin-top: 7%; margin-left: 2%;">
+            <div class="col-md-2 col-12" style="margin-top: 2%; margin-left: 2%;">
                 <div>
-                    <input class="btn btn-success w-75 p-3" type="submit" value="Update Event">
-                    <br>
-                    <small>By selecting <b>Update Event,</b> you are agreeing to Hobby Crunch's <a href="#">Terms
-                            and
-                            Conditions</a></small>
+                    {% if request.args.get('event_id') %}
+                        <input class="btn btn-success w-75 p-3" type="submit" name="action" value="Update Event">
+                        <br>
+                        <small>By selecting <b>Update Event,</b> you are agreeing to Hobby Crunch's <a href="#">Terms
+                                and
+                                Conditions</a></small><br><br>
+                        <input class="btn btn-danger w-75 p-3" type="submit" name="action" value="Cancel Event">    
+                        <br>
+                        <small>By selecting <b>Cancel Event,</b> you are agreeing to Hobby Crunch's <a href="#">Terms
+                                and
+                                Conditions</a></small>
+                    {% else %}
+                        <input class="btn btn-success w-75 p-3" type="submit" name="action" value="Create Event">
+                        <br>
+                        <small>By selecting <b>Create Event,</b> you are agreeing to Hobby Crunch's <a href="#">Terms
+                                and
+                                Conditions</a></small>
+                    {% endif %}
+
                 </div>
             </div>
         </div>

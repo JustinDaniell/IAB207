@@ -29,7 +29,7 @@
     <header>
        <nav class="navbar navbar-expand-lg navbar-light bg-orange">
            <div class="container-fluid">
-               <a class="navbar-brand" href="website/templates/index.html">Hobby Crunch</a>
+               <a class="navbar-brand" href="/">Hobby Crunch</a>
                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                aria-label="Toggle navigation">
@@ -37,7 +37,7 @@
             </button>
                <div class="collapse navbar-collapse" id="navbarSupportedContent">
                    <ul class="navbar-nav ms-auto">
-                       <a href="/manage" class="btn nav-btn ms-2">My Tickets</a>
+                       <a href="/tickets" class="btn nav-btn ms-2">My Tickets</a>
                        <a href="/create" class="btn nav-btn ms-2">My Events</a>
                         <!-- Register/Login/Logout and welcome -->
                    {% if current_user.is_authenticated %}

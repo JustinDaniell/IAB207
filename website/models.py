@@ -16,6 +16,7 @@ class User(db.Model,UserMixin):
     password_hash = db.Column(db.String(255), nullable=False)
     # relation to call user.comments and comment.created_by
     comments = db.relationship('Comment', backref='user')
+    events = db.relationship('Event', backref='host')
     
     # string print method
     def __repr__(self):
@@ -38,6 +39,7 @@ class Event(db.Model,UserMixin):
     comments = db.relationship('Comment', backref='event', lazy='dynamic')
     tickets = db.relationship('Ticket', backref='event')
     status = db.relationship('Status', backref='event')
+    host_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 	# string print method
     def __repr__(self):
@@ -61,13 +63,14 @@ class Ticket(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     price = db.Column(db.Float(10), index=True, nullable=False)
-    start_date = db.Column(db.Date)
-    end_date = db.Column(db.Date)
-    start_time = db.Column(db.Time)
-    end_time = db.Column(db.Time)
+    start_date = db.Column(db.Date, nullable=False)
+    end_date = db.Column(db.Date, nullable=False)
+    start_time = db.Column(db.Time, nullable=False)
+    end_time = db.Column(db.Time, nullable=False)
     # relations
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
 
     def _repr_(self):
         return f"id: {self.id}"
@@ -83,3 +86,15 @@ class Status(db.Model):
 
     def _repr_(self):
         return f"Status: {self.status}"
+
+class Order(db.Model):
+    __tablename__ = 'orders'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    order_date = db.Column(db.DateTime)
+    # relations
+    tickets = db.relationship('Ticket', backref='order', lazy=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def _repr_(self):
+        return f"Order: {self.id}"
