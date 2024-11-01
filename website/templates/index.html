@@ -10,14 +10,14 @@
         <div id="carouselIndicators" class="carousel slide mx-auto"
             style="max-width: 1000px; max-height: 500px; background-color: rgb(170, 170, 170);">
             <div class="carousel-indicators">
-                {% for i in range(earliest_events|length) %}
+                {% for i in range(events_temp|length) %}
                     <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="{{ i }}"
                         class="{{ 'active' if i == 0 else '' }}" aria-current="{{ 'true' if i == 0 else 'false' }}"
                         aria-label="Slide {{ i + 1 }}"></button>
                 {% endfor %}
             </div>
             <div class="carousel-inner">
-                {% for event in earliest_events %}
+                {% for event in events_temp %}
                     <div class="carousel-item {% if loop.index0 == 0 %}active{% endif %}">
                         <a href="{{ url_for('event.show', id=event.id) }}">
                             <img src="{{ event.image }}" class="d-block h-100 mx-auto" alt="{{ event.name }}">

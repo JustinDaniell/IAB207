@@ -8,6 +8,7 @@ import os
 from werkzeug.utils import secure_filename
 from datetime import datetime
 from sqlalchemy.orm import joinedload
+from sqlalchemy import func
 
 mainbp = Blueprint('main', __name__)
 
@@ -30,7 +31,7 @@ def check_upload_file(form):
 def index():
     # Start with all events
     events_query = db.session.query(Event).join(Ticket).options(joinedload(Event.tickets))
-
+    events_temp = db.session.scalars(db.select(Event).limit(3)).all()
     # Get filter parameters from the request
     activity_filters = request.args.getlist('activity')
     status_filters = request.args.getlist('status')
@@ -59,13 +60,8 @@ def index():
     # Execute the query and get the results
     events = events_query.all()
 
-    # Get the current date to filter for upcoming events
-    current_date = datetime.now()
-
     # Order by `start_date` and limit to the first 3 results
-    earliest_events = events_query.order_by(Ticket.start_date).limit(3).all()
-    
-    return render_template('index.html', events=events, earliest_events=earliest_events)  
+    return render_template('index.html', events=events, events_temp=events_temp)  
 
 
 @mainbp.route('/create', methods=['GET', 'POST'])
